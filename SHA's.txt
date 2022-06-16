@@ -1,0 +1,215 @@
+Variant: debug
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: release
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: profile
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: debugAndroidTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: debugUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: releaseUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: profileUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+
+> Task :firebase_core:signingReport
+Variant: debugAndroidTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: debugUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: releaseUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: profileUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+
+> Task :flutter_paystack:signingReport
+Variant: debugAndroidTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: debugUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: releaseUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: profileUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+
+> Task :path_provider_android:signingReport
+Variant: debugAndroidTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: debugUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: releaseUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: profileUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+
+> Task :shared_preferences_android:signingReport
+Variant: debugAndroidTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: debugUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: releaseUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
+Variant: profileUnitTest
+Config: debug
+Store: C:\Users\mhwun\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 7F:72:86:D4:19:46:1E:2B:F7:43:B8:47:45:2F:E7:8F
+SHA1: A9:2B:B1:68:72:8B:CA:C4:AF:C7:10:96:2E:6F:FD:28:CB:DC:1C:58
+SHA-256: 5E:EF:41:AE:3F:9B:22:5D:69:A9:4F:95:62:0C:38:7D:70:A2:D9:E8:CD:41:2A:BE:D8:8C:85:6A:C5:4A:09:92
+Valid until: Thursday, January 11, 2052
+----------
