@@ -66,16 +66,17 @@ class _AvatarState extends State<Avatar> {
                         api + _avatarURLS[i] + ext,
                         backgroundColor: backgroundColor,
                         cacheImage: true,
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                         placeHolder: (context, url) => const SizedBox(
                           width: 50,
                           height: 50,
                           child: CircularProgressIndicator(),
                         ),
                         elevation: 8.0,
-                        imageFit: BoxFit.fitHeight,
+                        imageFit: BoxFit.fill,
                         foregroundColor: _selectedAvatar == _avatarURLS[i]
-                            ? Colors.black38
+                            ? Colors.black
                             : Colors.transparent,
                         onTap: () {
                           setState(() {

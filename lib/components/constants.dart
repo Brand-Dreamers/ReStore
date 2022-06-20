@@ -27,7 +27,7 @@ TextStyle normalTextStyle =
     GoogleFonts.poppins().copyWith(fontSize: 36, color: headerColor);
 
 TextStyle buttonTextStyle = GoogleFonts.poppins()
-    .copyWith(fontWeight: FontWeight.bold, color: lightTextColor);
+    .copyWith(fontWeight: FontWeight.bold, color: lightTextColor, fontSize: 16);
 
 final List<String> colleges = [
   "COLAMRUD",

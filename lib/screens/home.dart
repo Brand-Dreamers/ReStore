@@ -62,7 +62,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   MaterialPageRoute(builder: (context) => const Account()));
             }),
           ],
-          
         ),
         elevation: 0.0,
       ),
@@ -74,23 +73,89 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Row(
+                  children: [
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PdfEditScreen())),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: buttonColor),
+                        height: 250,
+                        width: 120,
+                        child: const Center(
+                          child: Text("Stamp Document"),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PdfEditScreen())),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: buttonColor),
+                        height: 250,
+                        width: 120,
+                        child: const Center(
+                          child: Text("Stamp Document"),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(
                   height: 50,
                 ),
-                GestureDetector(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PdfEditScreen())),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                        color: buttonColor),
-                    height: 100,
-                    child: const Center(
-                      child: Text("Stamp Document"),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PdfEditScreen())),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: buttonColor),
+                        height: 250,
+                        width: 120,
+                        child: const Center(
+                          child: Text("Stamp Document"),
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PdfEditScreen())),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: buttonColor),
+                        height: 250,
+                        width: 120,
+                        child: const Center(
+                          child: Text("Stamp Document"),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ]),
         )),

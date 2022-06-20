@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:restore/components/constants.dart';
-import 'package:restore/services/authservice.dart';
+import 'package:restore/screens/start.dart';
 
 class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class Splash extends StatelessWidget {
                 style: GoogleFonts.poppins(fontSize: 14, color: subtitleColor))
           ],
         ),
-        nextScreen: AuthService(),
+        nextScreen: const Start(),
         splashTransition: SplashTransition.fadeTransition,
         duration: 1500,
       ),
