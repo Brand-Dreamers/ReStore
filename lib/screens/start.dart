@@ -22,11 +22,13 @@ class Start extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 100,),
+              const SizedBox(
+                height: 80,
+              ),
               Image.asset(
                 "assets/images/welcome.png",
-                height: 300,
-                width: 300,
+                height: 250,
+                width: 250,
               ),
               const SizedBox(
                 height: 20,
@@ -42,19 +44,25 @@ class Start extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Text(
-                "Lorem Ipsum",
-                style: subtitleTextStyle,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  "Save yourself the stress of manually stamping your documents." "\nWith Restore, you can get it stamped within the hour." +
+                    "\nYou can also upload your documents for future use.",
+                  style: subtitleTextStyle,
+                ),
               ),
               const SizedBox(
-                height: 40,
+                height: 50,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => AuthService()));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AuthService()));
                   },
                   child: Container(
                     padding: const EdgeInsets.all(20),

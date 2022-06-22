@@ -50,7 +50,7 @@ class _AvatarState extends State<Avatar> {
                 Text("Trust me, this is the last step...",
                     style: subtitleTextStyle),
                 const SizedBox(
-                  height: 50,
+                  height: 40,
                 ),
                 Padding(
                     padding: const EdgeInsets.symmetric(
@@ -72,10 +72,10 @@ class _AvatarState extends State<Avatar> {
                                 backgroundImage:
                                     NetworkImage(api + _avatarURLS[i] + ext),
                                 backgroundColor: backgroundColor,
-                                radius: 30.0,
+                                radius: 20.0,
                                 foregroundColor:
                                     _selectedAvatar == _avatarURLS[i]
-                                        ? Colors.black
+                                        ? Colors.black45
                                         : Colors.transparent,
                               ));
                         },

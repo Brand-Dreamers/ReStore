@@ -12,21 +12,7 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with TickerProviderStateMixin {
-  late TabController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TabController(length: 2, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
@@ -60,7 +46,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 backgroundImage:
                     NetworkImage(api + User.getUser().avatarURL + ext),
                 radius: 15.0,
-                backgroundColor: backgroundColor,
+                backgroundColor: Colors.transparent,
               ),
             ),
           ],
@@ -75,85 +61,138 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PdfEditScreen())),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            color: buttonColor),
-                        height: 250,
-                        width: 120,
-                        child: const Center(
-                          child: Text("Stamp Document"),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PdfEditScreen())),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            color: buttonColor),
-                        height: 250,
-                        width: 120,
-                        child: const Center(
-                          child: Text("Stamp Document"),
-                        ),
-                      ),
-                    ),
-                  ],
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Welcome, User" + User.getUser().lastname,
+                  style: littleHeaderTextStyle,
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 5,
                 ),
-                Row(
+                Text(
+                  "What would you like to do today?",
+                  style: subtitleTextStyle,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.topLeft,
                   children: [
-                    GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PdfEditScreen())),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            color: buttonColor),
-                        height: 250,
-                        width: 120,
-                        child: const Center(
-                          child: Text("Stamp Document"),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 2.0, vertical: 2.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const PdfEditScreen()));
+                        },
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(5, 0, 0, 0),
+                                borderRadius: BorderRadius.circular(5.0)),
+                            height: 250,
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  "assets/images/stamp.png",
+                                  height: 150,
+                                  width: 150,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "Stamp",
+                                    style: littleHeaderTextStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 20,
+                    Positioned(
+                      left: 160,
+                      top: 140,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 2.0, vertical: 2.0),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: const Color.fromARGB(5, 0, 0, 0),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              height: 250,
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/upload.png",
+                                    height: 150,
+                                    width: 150,
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      "Upload",
+                                      style: littleHeaderTextStyle,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PdfEditScreen())),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            color: buttonColor),
-                        height: 250,
-                        width: 120,
-                        child: const Center(
-                          child: Text("Stamp Document"),
+                    Positioned(
+                      top: 280,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 2.0, vertical: 2.0),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: const Color.fromARGB(5, 0, 0, 0),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              height: 250,
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/document.png",
+                                    height: 150,
+                                    width: 150,
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      "Documents",
+                                      style: littleHeaderTextStyle,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),

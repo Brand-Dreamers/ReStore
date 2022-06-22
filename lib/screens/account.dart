@@ -1,4 +1,3 @@
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/components/user.dart';
@@ -28,16 +27,13 @@ class Account extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                  const SizedBox(height: 20,),
+                  const SizedBox(height: 30,),
                   Align(
                     alignment: Alignment.center,
-                    child: CircularProfileAvatar(
-                      api + User.getUser().avatarURL + ext,
-                      radius: 75,
-                      backgroundColor: backgroundColor,
-                      cacheImage: true,
-                      elevation: 8.0,
-                      imageFit: BoxFit.fitHeight,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(api + User.getUser().avatarURL + ext),
+                      radius: 100,
+                      backgroundColor: Colors.transparent,
                     ),
                   ),
                   const SizedBox(height: 40,),
