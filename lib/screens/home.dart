@@ -1,4 +1,3 @@
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/components/user.dart';
@@ -52,15 +51,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               "Restore",
               style: headerEmphasisTextStyle,
             ),
-            CircularProfileAvatar(api + User.getUser().avatarURL + ext,
-                radius: 15,
+            GestureDetector(
+              onTap: () {
+                setState(() => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Account())));
+              },
+              child: CircleAvatar(
+                backgroundImage:
+                    NetworkImage(api + User.getUser().avatarURL + ext),
+                radius: 15.0,
                 backgroundColor: backgroundColor,
-                cacheImage: true,
-                elevation: 8.0,
-                imageFit: BoxFit.fitHeight, onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Account()));
-            }),
+              ),
+            ),
           ],
         ),
         elevation: 0.0,

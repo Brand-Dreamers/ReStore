@@ -27,134 +27,152 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         backgroundColor: backgroundColor,
         body: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+          child: SingleChildScrollView(
+            child: Stack(
               children: [
-                Text("Hello Again!", style: headerTextStyle),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text("Welcome back, we've missed you!", style: subtitleTextStyle),
-                const SizedBox(
-                  height: 50,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                ShaderMask(
+                  shaderCallback: (rect) => const LinearGradient(
+                    begin: Alignment.bottomCenter, end: Alignment.center,
+                    colors: [Colors.black12, Colors.transparent]).createShader(rect),
+                    blendMode: BlendMode.darken,
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: fieldColor,
-                      border: Border.all(
-                        color: borderColor,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0),
-                      child: TextField(
-                        controller: _emailController,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(Icons.mail_outline_sharp,
-                                  size: 22, color: iconColor)),
-                          border: InputBorder.none,
-                          hintText: "Email",
-                        ),
-                      ),
-                    ),
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/welcome.png"),
+                        fit: BoxFit.cover,
+                        colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken)
+                      ))
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: fieldColor,
-                      border: Border.all(
-                        color: borderColor,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0),
-                      child: TextField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(Icons.lock_outline_sharp,
-                                  size: 22, color: iconColor)),
-                          border: InputBorder.none,
-                          hintText: "Password",
-                        ),
-                      ),
-                    ),
+                Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Hello Again!", style: headerTextStyle),
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      String password = _passwordController.text.trim();
-                      String email = _emailController.text.trim();
-                      User.getUser().email = email;
-                      User.getUser().password = password;
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Home()));
-                    },
+                  Text("Welcome back, we've missed you!", style: subtitleTextStyle),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Container(
-                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: buttonColor,
+                        color: fieldColor,
+                        border: Border.all(
+                          color: borderColor,
+                        ),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child:
-                          Center(child: Text("Sign In", style: buttonTextStyle)),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "New User?",
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: TextField(
+                          controller: _emailController,
+                          decoration: const InputDecoration(
+                            prefixIcon: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 2.0),
+                                child: Icon(Icons.mail_outline_sharp,
+                                    size: 22, color: iconColor)),
+                            border: InputBorder.none,
+                            hintText: "Email",
+                          ),
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 5,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: fieldColor,
+                        border: Border.all(
+                          color: borderColor,
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: TextField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            prefixIcon: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 2.0),
+                                child: Icon(Icons.lock_outline_sharp,
+                                    size: 22, color: iconColor)),
+                            border: InputBorder.none,
+                            hintText: "Password",
+                          ),
+                        ),
+                      ),
                     ),
-                    GestureDetector(
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: GestureDetector(
                       onTap: () {
+                        String password = _passwordController.text.trim();
+                        String email = _emailController.text.trim();
+                        User.getUser().email = email;
+                        User.getUser().password = password;
                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Signup()));
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Home()));
                       },
-                      child: Text("Sign Up",
-                          style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: buttonColor)),
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: buttonColor,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child:
+                            Center(child: Text("Sign In", style: buttonTextStyle)),
+                      ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "New User?",
+                        style: GoogleFonts.poppins(
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Signup()));
+                        },
+                        child: Text("Sign Up",
+                            style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: buttonColor)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              ]
             ),
           ),
         ),

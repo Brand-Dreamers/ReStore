@@ -15,7 +15,7 @@ class Start extends StatelessWidget {
     return WillPopScope(
       onWillPop: () => _onBackPressed(),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
@@ -24,7 +24,7 @@ class Start extends StatelessWidget {
             children: [
               const SizedBox(height: 100,),
               Image.asset(
-                "assets/images/restore.png",
+                "assets/images/welcome.png",
                 height: 300,
                 width: 300,
               ),

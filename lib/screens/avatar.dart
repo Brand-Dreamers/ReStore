@@ -1,4 +1,3 @@
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/components/user.dart';
@@ -54,39 +53,34 @@ class _AvatarState extends State<Avatar> {
                   height: 50,
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                    shrinkWrap: true,
-                    children: List.generate(4, (i) {
-                      return CircularProfileAvatar(
-                        api + _avatarURLS[i] + ext,
-                        backgroundColor: backgroundColor,
-                        cacheImage: true,
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                        placeHolder: (context, url) => const SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(),
-                        ),
-                        elevation: 8.0,
-                        imageFit: BoxFit.fill,
-                        foregroundColor: _selectedAvatar == _avatarURLS[i]
-                            ? Colors.black
-                            : Colors.transparent,
-                        onTap: () {
-                          setState(() {
-                            _selectedAvatar = _avatarURLS[i];
-                          });
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 10),
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      shrinkWrap: true,
+                      children: List.generate(
+                        4,
+                        (i) {
+                          return GestureDetector(
+                              onTap: () {
+                                setState(
+                                    () => _selectedAvatar = _avatarURLS[i]);
+                              },
+                              child: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(api + _avatarURLS[i] + ext),
+                                backgroundColor: backgroundColor,
+                                radius: 30.0,
+                                foregroundColor:
+                                    _selectedAvatar == _avatarURLS[i]
+                                        ? Colors.black
+                                        : Colors.transparent,
+                              ));
                         },
-                      );
-                    }),
-                  ),
-                ),
+                      ),
+                    )),
                 const SizedBox(
                   height: 50,
                 ),
