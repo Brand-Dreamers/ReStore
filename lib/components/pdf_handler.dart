@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:io';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:pdfx/pdfx.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
@@ -25,18 +26,15 @@ Future<PDFData> _loadPDF() async {
   return PDFData(filename: "Null file", data: Uint8List(0));
 }
 
-pw.Document createPDF(Uint8List pdfBytes) {
+Future<void> _createAndSavePDF(PDFData pdfData) async{
   final pdf = pw.Document();
-  final pdfImage = pw.MemoryImage(pdfBytes);
+  final pdfImage = pw.MemoryImage(pdfData.data);
   pdf.addPage(pw.Page(build: (pw.Context context) {
     return pw.Center(
-        child: pdfBytes.isEmpty ? pw.Text("Empty File") : pw.Image(pdfImage));
+        child: pdfData.data.isEmpty ? pw.Text("Empty File") : pw.Image(pdfImage));
   }));
-  return pdf;
-}
 
-Future<void> savePDF(pw.Document pdf, String filename) async {
-  final file = File(filename + '.pdf');
+  final file = File(pdfData.filename + '-stamped.pdf');
   await file.writeAsBytes(await pdf.save());
 }
 
@@ -49,13 +47,15 @@ class PdfHandler extends StatefulWidget {
 
 class _PdfHandlerState extends State<PdfHandler> {
   late PDFData pdfData;
-  late pw.Document document;
+  late PdfControllerPinch pinchController;
+
   @override
   void initState() {
     super.initState();
     _loadPDF().then((value) {
       pdfData = value;
-      document = createPDF(value.data);
+      pinchController =
+          PdfControllerPinch(document: PdfDocument.openData(value.data));
     });
   }
 
@@ -81,10 +81,7 @@ class _PdfHandlerState extends State<PdfHandler> {
                         style: littleHeaderTextStyle,
                       );
                     } else {
-                      return Text(
-                        "Success",
-                        style: headerEmphasisTextStyle,
-                      );
+                      return PdfViewPinch(controller: pinchController);
                     }
                   } else {
                     return Text(
@@ -102,8 +99,8 @@ class _PdfHandlerState extends State<PdfHandler> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => savePDF(document, pdfData.filename),
-        child: const Icon(Icons.save),
+        onPressed: () => _createAndSavePDF(pdfData),
+        child: const Icon(Icons.save, color: backgroundColor,),
       ),
     );
   }
