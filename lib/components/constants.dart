@@ -10,6 +10,7 @@ const subtitleColor = Colors.black38;
 const iconColor = Colors.black45;
 const borderColor = Colors.black12;
 const lightTextColor = Colors.white;
+const containerColor = Color.fromARGB(10, 10, 10, 0);
 
 TextStyle headerEmphasisTextStyle = GoogleFonts.poppins()
     .copyWith(fontWeight: FontWeight.bold, fontSize: 24, color: buttonColor);

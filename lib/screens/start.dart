@@ -47,8 +47,7 @@ class Start extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
-                  "Save yourself the stress of manually stamping your documents." "\nWith Restore, you can get it stamped within the hour." +
-                    "\nYou can also upload your documents for future use.",
+                  "Save yourself the stress of manually stamping your documents." "\nWith Restore, you can get it stamped within the hour." "\nYou can also upload your documents for future use.",
                   style: subtitleTextStyle,
                 ),
               ),

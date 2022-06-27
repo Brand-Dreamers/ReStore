@@ -28,22 +28,7 @@ class _LoginState extends State<Login> {
         backgroundColor: backgroundColor,
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                ShaderMask(
-                  shaderCallback: (rect) => const LinearGradient(
-                    begin: Alignment.bottomCenter, end: Alignment.center,
-                    colors: [Colors.black12, Colors.transparent]).createShader(rect),
-                    blendMode: BlendMode.darken,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/welcome.png"),
-                        fit: BoxFit.cover,
-                        colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken)
-                      ))
-                  ),
-                ),
+            child: 
                 Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -172,11 +157,10 @@ class _LoginState extends State<Login> {
                   ),
                 ],
               ),
-              ]
             ),
           ),
         ),
-      ),
-    );
+      );
+    
   }
 }

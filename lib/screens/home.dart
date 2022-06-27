@@ -15,7 +15,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    //Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
+    double containerHeight = size.height * 0.3;
+    double imageSize = containerHeight * 0.6;
+    double leftOffset = containerHeight - 80;
+    double topOffset = containerHeight - 100;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -65,7 +69,7 @@ class _HomeState extends State<Home> {
                   height: 20,
                 ),
                 Text(
-                  "Welcome, User" + User.getUser().lastname,
+                  "Welcome, " + User.getUser().surname,
                   style: littleHeaderTextStyle,
                 ),
                 const SizedBox(
@@ -90,21 +94,21 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const PdfEditScreen()));
+                                  builder: (context) => const PdfHandler()));
                         },
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
                             decoration: BoxDecoration(
-                                color: const Color.fromARGB(5, 0, 0, 0),
+                                color: containerColor,
                                 borderRadius: BorderRadius.circular(5.0)),
-                            height: 250,
+                            height: containerHeight,
                             child: Column(
                               children: [
                                 Image.asset(
                                   "assets/images/stamp.png",
-                                  height: 150,
-                                  width: 150,
+                                  height: imageSize,
+                                  width: imageSize,
                                 ),
                                 const SizedBox(
                                   height: 20,
@@ -122,8 +126,8 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Positioned(
-                      left: 160,
-                      top: 140,
+                      left: leftOffset,
+                      top: topOffset,
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: Padding(
@@ -133,15 +137,15 @@ class _HomeState extends State<Home> {
                             onTap: () {},
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: const Color.fromARGB(5, 0, 0, 0),
+                                  color: containerColor,
                                   borderRadius: BorderRadius.circular(5.0)),
-                              height: 250,
+                              height: containerHeight,
                               child: Column(
                                 children: [
                                   Image.asset(
                                     "assets/images/upload.png",
-                                    height: 150,
-                                    width: 150,
+                                    height: imageSize,
+                                    width: imageSize,
                                   ),
                                   const SizedBox(
                                     height: 20,
@@ -160,7 +164,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Positioned(
-                      top: 280,
+                      top: topOffset * 2,
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
@@ -170,15 +174,15 @@ class _HomeState extends State<Home> {
                             onTap: () {},
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: const Color.fromARGB(5, 0, 0, 0),
+                                  color: containerColor,
                                   borderRadius: BorderRadius.circular(5.0)),
-                              height: 250,
+                              height: containerHeight,
                               child: Column(
                                 children: [
                                   Image.asset(
                                     "assets/images/document.png",
-                                    height: 150,
-                                    width: 150,
+                                    height: imageSize,
+                                    width: imageSize,
                                   ),
                                   const SizedBox(
                                     height: 20,
