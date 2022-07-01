@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:restore/components/user.dart';
-import 'package:restore/screens/login.dart';
 import 'package:restore/screens/profile.dart';
 
 class Signup extends StatefulWidget {
-  const Signup({Key? key}) : super(key: key);
+  final Function toggleView;
+  const Signup({Key? key, required this.toggleView}) : super(key: key);
 
   @override
   State<Signup> createState() => _SignupState();
@@ -145,14 +145,13 @@ class _SignupState extends State<Signup> {
                       String password = _passwordController.text.trim();
                       String confirmPassword = _confirmController.text.trim();
                       String email = _emailController.text.trim();
-                      if(password == confirmPassword)
-                      {
+                      if (password == confirmPassword) {
                         User.getUser().email = email;
                         User.getUser().password = password;
                         Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Profile()));
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Profile()));
                       }
                     },
                     child: Container(
@@ -183,12 +182,7 @@ class _SignupState extends State<Signup> {
                       width: 5,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Login()));
-                      },
+                      onTap: () => widget.toggleView(),
                       child: Text("Sign In",
                           style: GoogleFonts.poppins(
                               fontSize: 18,

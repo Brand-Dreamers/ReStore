@@ -135,6 +135,10 @@ class _ProfileState extends State<Profile> {
                               padding: EdgeInsets.symmetric(horizontal: 2.0),
                               child: Icon(Icons.house_outlined,
                                   size: 22, color: iconColor)),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  width: 1, color: borderColor),
+                              borderRadius: BorderRadius.circular(5.0)),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide: const BorderSide(
@@ -145,6 +149,7 @@ class _ProfileState extends State<Profile> {
                                 value: item,
                               ))
                           .toList(),
+                      dropdownColor: backgroundColor,
                       onChanged: (item) => setState(() {
                         selectedCollege = item ?? "";
                         selectedDepartment = null;
@@ -164,6 +169,10 @@ class _ProfileState extends State<Profile> {
                               padding: EdgeInsets.symmetric(horizontal: 2.0),
                               child: Icon(Icons.business_outlined,
                                   size: 22, color: iconColor)),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  width: 1, color: borderColor),
+                              borderRadius: BorderRadius.circular(5.0)),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide: const BorderSide(
@@ -174,6 +183,7 @@ class _ProfileState extends State<Profile> {
                                 value: item,
                               ))
                           .toList(),
+                      dropdownColor: backgroundColor,
                       onChanged: (item) =>
                           setState(() => selectedDepartment = item ?? ""),
                     ),
@@ -191,6 +201,10 @@ class _ProfileState extends State<Profile> {
                               padding: EdgeInsets.symmetric(horizontal: 2.0),
                               child: Icon(Icons.grade_outlined,
                                   size: 22, color: iconColor)),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  width: 1, color: borderColor),
+                              borderRadius: BorderRadius.circular(5.0)),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide: const BorderSide(
@@ -201,6 +215,7 @@ class _ProfileState extends State<Profile> {
                                 value: item,
                               ))
                           .toList(),
+                      dropdownColor: backgroundColor,
                       onChanged: (item) =>
                           setState(() => selectedLevel = item ?? ""),
                     ),

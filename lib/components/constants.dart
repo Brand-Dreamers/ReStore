@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 
-final String databaseURL = "https://restore-be.herokuapp.com";
+const String baseURL = "https://restore-be.herokuapp.com";
+const String usersEndpoint = "/users";
+const String documentsEndpoint = "/documents";
+const String profileEndpoint = "/profile";
+const String login = "/signin";
+const String register = "/signup";
 
 const backgroundColor = Color.fromARGB(255, 250, 255, 250);
 const fieldColor = Colors.transparent;
@@ -13,12 +18,19 @@ const iconColor = Colors.black45;
 const borderColor = Colors.black12;
 const lightTextColor = Colors.white;
 const containerColor = Color.fromARGB(10, 10, 10, 0);
+const errorColor = Color.fromARGB(255, 197, 20, 7);
+
+TextStyle atUserTextStyle = GoogleFonts.poppins()
+    .copyWith(fontWeight: FontWeight.bold, fontSize: 16, color: buttonColor);
 
 TextStyle headerEmphasisTextStyle = GoogleFonts.poppins()
     .copyWith(fontWeight: FontWeight.bold, fontSize: 24, color: buttonColor);
 
 TextStyle headerTextStyle = GoogleFonts.poppins()
     .copyWith(fontWeight: FontWeight.bold, fontSize: 36, color: headerColor);
+
+TextStyle headerErrorTextStyle = GoogleFonts.poppins()
+    .copyWith(fontWeight: FontWeight.bold, fontSize: 22, color: errorColor);
 
 TextStyle littleHeaderTextStyle = GoogleFonts.poppins()
     .copyWith(fontWeight: FontWeight.bold, fontSize: 20, color: headerColor);
@@ -31,6 +43,9 @@ TextStyle normalTextStyle =
 
 TextStyle buttonTextStyle = GoogleFonts.poppins()
     .copyWith(fontWeight: FontWeight.bold, color: lightTextColor, fontSize: 16);
+
+TextStyle iconButtonTextStyle =
+    GoogleFonts.poppins().copyWith(color: buttonColor, fontSize: 16);
 
 final List<String> colleges = [
   "COLAMRUD",
@@ -126,6 +141,91 @@ class RestoreThemes {
   );
 }
 
+final List<String> documentFilter = [
+  "Stamped",
+  "Uploaded",
+];
+
+class Wait extends StatelessWidget {
+  final String message;
+  const Wait({Key? key, this.message = "Please Wait"}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 120,
+      width: 150,
+      decoration: BoxDecoration(
+        color: containerColor,
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const CircularProgressIndicator(
+            color: buttonColor,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            message,
+            style: subtitleTextStyle,
+          ),
+        ],
+      ),
+    );
+    ;
+  }
+}
+
+class BlankScreen extends StatelessWidget {
+  const BlankScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      backgroundColor: backgroundColor,
+      body: Center(child: Wait()),
+    );
+  }
+}
+
+class NotificationContainer extends StatelessWidget {
+  final String message;
+  final String imageURL;
+
+  const NotificationContainer(
+      {Key? key, required this.message, required this.imageURL})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          Image.asset(
+            imageURL,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            message,
+            style: subtitleTextStyle,
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 /**
  * Stack(

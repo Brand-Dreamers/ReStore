@@ -25,4 +25,8 @@ class User {
   static User getUser() {
     return _user;
   }
+
+  static User fromJson(String jsonBody) {
+    return null as User;
+  }
 }

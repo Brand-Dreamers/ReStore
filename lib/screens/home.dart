@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/components/user.dart';
-import 'package:restore/screens/account.dart';
 import 'package:restore/screens/settings.dart';
-import 'package:restore/components/pdf_handler.dart';
+import 'package:restore/screens/stamp.dart';
+import 'package:restore/screens/upload.dart';
+import 'package:restore/screens/view_documents.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -20,6 +21,12 @@ class _HomeState extends State<Home> {
     double imageSize = containerHeight * 0.6;
     double leftOffset = containerHeight - 80;
     double topOffset = containerHeight - 100;
+
+    void _showAccountPanel() {
+      showModalBottomSheet(
+          context: context, builder: (context) => const AccountPanel());
+    }
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -33,28 +40,21 @@ class _HomeState extends State<Home> {
               Icons.menu,
               color: subtitleColor,
             )),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Restore",
-              style: headerEmphasisTextStyle,
-            ),
-            GestureDetector(
-              onTap: () {
-                setState(() => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Account())));
-              },
-              child: CircleAvatar(
-                backgroundImage:
-                    NetworkImage(api + User.getUser().avatarURL + ext),
-                radius: 15.0,
-                backgroundColor: Colors.transparent,
-              ),
-            ),
-          ],
+        title: Text(
+          "Restore",
+          style: headerEmphasisTextStyle,
         ),
+        actions: [
+          GestureDetector(
+            onTap: () => _showAccountPanel(),
+            child: CircleAvatar(
+              backgroundImage:
+                  NetworkImage(api + User.getUser().avatarURL + ext),
+              radius: 15.0,
+              backgroundColor: Colors.transparent,
+            ),
+          ),
+        ],
         elevation: 0.0,
       ),
       body: SafeArea(
@@ -94,7 +94,7 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const PdfHandler()));
+                                  builder: (context) => const Stamp()));
                         },
                         child: Align(
                           alignment: Alignment.centerLeft,
@@ -134,7 +134,12 @@ class _HomeState extends State<Home> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 2.0, vertical: 2.0),
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Upload()));
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                   color: containerColor,
@@ -171,7 +176,13 @@ class _HomeState extends State<Home> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 2.0, vertical: 2.0),
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ViewDocuments()));
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                   color: containerColor,
@@ -205,6 +216,159 @@ class _HomeState extends State<Home> {
               ]),
         )),
       ),
+    );
+  }
+}
+
+class AccountPanel extends StatelessWidget {
+  const AccountPanel({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    User user = User.getUser();
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      height: 500,
+      width: size.width,
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: Column(children: [
+        Image.network(
+          user.avatarURL,
+          width: size.width - 10,
+          height: 300,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: borderColor,
+              ),
+              borderRadius: BorderRadius.circular(5.0),
+              color: backgroundColor,
+              boxShadow: const [
+                BoxShadow(
+                  color: containerColor,
+                )
+              ]),
+          child: Center(
+            child: Text(
+              user.surname + " " + user.lastname,
+              style: littleHeaderTextStyle,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: borderColor,
+              ),
+              borderRadius: BorderRadius.circular(5.0),
+              color: backgroundColor,
+              boxShadow: const [
+                BoxShadow(
+                  color: containerColor,
+                )
+              ]),
+          child: Center(
+            child: Text(
+              user.email,
+              style: littleHeaderTextStyle,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: borderColor,
+                    ),
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: backgroundColor,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: containerColor,
+                      )
+                    ]),
+                child: Center(
+                  child: Text(
+                    user.college,
+                    style: littleHeaderTextStyle,
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: borderColor,
+                    ),
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: backgroundColor,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: containerColor,
+                      )
+                    ]),
+                child: Center(
+                  child: Text(
+                    user.department,
+                    style: littleHeaderTextStyle,
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: borderColor,
+                    ),
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: backgroundColor,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: containerColor,
+                      )
+                    ]),
+                child: Center(
+                  child: Text(
+                    user.level,
+                    style: littleHeaderTextStyle,
+                  ),
+                ),
+              ),
+            ]),
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: borderColor,
+              ),
+              borderRadius: BorderRadius.circular(5.0),
+              color: backgroundColor,
+              boxShadow: const [
+                BoxShadow(
+                  color: containerColor,
+                )
+              ]),
+          child: Center(
+            child: Text(
+              user.matricNumber,
+              style: littleHeaderTextStyle,
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }
