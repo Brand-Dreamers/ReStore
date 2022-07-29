@@ -15,7 +15,7 @@ Future<bool> willPop() async {
 }
 
 class _AvatarState extends State<Avatar> {
-  String? _selectedAvatar;
+  String _selectedAvatar = "";
   final List<String> _avatarURLS = getAvatarURLS(4);
 
   @override
@@ -64,20 +64,39 @@ class _AvatarState extends State<Avatar> {
                         4,
                         (i) {
                           return GestureDetector(
-                              onTap: () {
-                                setState(
-                                    () => _selectedAvatar = _avatarURLS[i]);
-                              },
-                              child: CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage(api + _avatarURLS[i] + ext),
-                                backgroundColor: backgroundColor,
-                                radius: 20.0,
-                                foregroundColor:
-                                    _selectedAvatar == _avatarURLS[i]
-                                        ? Colors.black45
-                                        : Colors.transparent,
-                              ));
+                            onTap: () {
+                              setState(() => _selectedAvatar =
+                                  (_selectedAvatar == _avatarURLS[i])
+                                      ? ""
+                                      : _selectedAvatar = _avatarURLS[i]);
+                            },
+                            child: Stack(children: [
+                              Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Image.network(
+                                      api + _avatarURLS[i] + ext)),
+                              _selectedAvatar == _avatarURLS[i]
+                                  ? const Align(
+                                      alignment: Alignment.topRight,
+                                      child: CircleAvatar(
+                                        radius: 10,
+                                        backgroundColor: buttonColor,
+                                        child: Icon(Icons.done_outline,
+                                            color: backgroundColor),
+                                      ),
+                                    )
+                                  : const Align(
+                                      alignment: Alignment.topRight,
+                                      child: CircleAvatar(
+                                        radius: 10,
+                                        backgroundColor: Colors.transparent,
+                                        child: Icon(Icons.done_outline,
+                                            color: Colors.transparent),
+                                      ),
+                                    )
+                            ]),
+                          );
                         },
                       ),
                     )),
@@ -88,11 +107,17 @@ class _AvatarState extends State<Avatar> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
                     onTap: () {
-                      User.getUser().avatarURL = _selectedAvatar as String;
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Home()));
+                      if (_selectedAvatar != "") {
+                        User.getUser().avatarURL = _selectedAvatar;
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Home()));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Please select an avatar")));
+                      }
                     },
                     child: Container(
                       padding: const EdgeInsets.all(20),

@@ -10,8 +10,9 @@ const String login = "/signin";
 const String register = "/signup";
 
 const backgroundColor = Color.fromARGB(255, 250, 255, 250);
-const fieldColor = Colors.transparent;
-const buttonColor = Color.fromARGB(255, 26, 133, 105);
+const fieldColor = Color.fromARGB(0, 136, 129, 129);
+const buttonColor = Color.fromARGB(255, 0, 158, 96);
+
 const headerColor = Colors.black54;
 const subtitleColor = Colors.black38;
 const iconColor = Colors.black45;
@@ -19,6 +20,12 @@ const borderColor = Colors.black12;
 const lightTextColor = Colors.white;
 const containerColor = Color.fromARGB(10, 10, 10, 0);
 const errorColor = Color.fromARGB(255, 197, 20, 7);
+
+TextStyle emphasizedHeader = GoogleFonts.poppins(
+    fontWeight: FontWeight.w500, fontSize: 28, color: Colors.black);
+
+TextStyle emphasizedSubheader = GoogleFonts.poppins(
+    fontWeight: FontWeight.w300, fontSize: 14, color: Colors.grey);
 
 TextStyle atUserTextStyle = GoogleFonts.poppins()
     .copyWith(fontWeight: FontWeight.bold, fontSize: 16, color: buttonColor);
@@ -146,6 +153,70 @@ final List<String> documentFilter = [
   "Uploaded",
 ];
 
+class Slide extends StatelessWidget {
+  final String slideImageURL;
+  final String topHeaderText;
+  final String bottomHeaderText;
+  final String description;
+
+  const Slide(
+      {Key? key,
+      required this.slideImageURL,
+      required this.topHeaderText,
+      required this.bottomHeaderText,
+      required this.description})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            topHeaderText,
+            style: emphasizedHeader,
+          ),
+          Text(
+            bottomHeaderText,
+            style: emphasizedHeader,
+          ),
+          const SizedBox(height: 5),
+          Text(description, style: emphasizedSubheader),
+          const SizedBox(
+            height: 50,
+          ),
+          Image.asset(slideImageURL),
+        ],
+      ),
+    );
+  }
+}
+
+List<Slide> startSlides = [
+  const Slide(
+    topHeaderText: "Easy",
+    bottomHeaderText: "Document Stamping",
+    description: "With Restore, you can stamp your documents online with ease",
+    slideImageURL: "assets/images/start 1.png",
+  ),
+  const Slide(
+    topHeaderText: "Save",
+    bottomHeaderText: "Your Time",
+    description:
+        "Manage your time by saving yourself the stress of manual stamping",
+    slideImageURL: "assets/images/start 2.png",
+  ),
+  const Slide(
+    topHeaderText: "Upload",
+    bottomHeaderText: "Your Documents",
+    description: "Save and upload your documents for later use",
+    slideImageURL: "assets/images/start 3.png",
+  ),
+];
+
 class Wait extends StatelessWidget {
   final String message;
   const Wait({Key? key, this.message = "Please Wait"}) : super(key: key);
@@ -176,7 +247,6 @@ class Wait extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 }
 

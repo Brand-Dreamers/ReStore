@@ -98,7 +98,11 @@ class _ViewDocumentsState extends State<ViewDocuments> {
                       imageURL: "assets/images/fatal error.png");
                 }
               })),
-        )));
+        )),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.upload_file_outlined, color: iconColor),
+          onPressed: () {}),
+        );
   }
 }
 

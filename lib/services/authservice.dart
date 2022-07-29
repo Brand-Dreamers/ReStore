@@ -8,7 +8,7 @@ import 'package:restore/screens/signup.dart';
 const int success = 200;
 
 class AuthService extends StatefulWidget {
-  AuthService({Key? key}) : super(key: key);
+  const AuthService({Key? key}) : super(key: key);
   
   @override
   State<AuthService> createState() => _AuthServiceState();

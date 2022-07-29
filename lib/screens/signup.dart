@@ -36,19 +36,44 @@ class _SignupState extends State<Signup> {
       child: Scaffold(
         backgroundColor: backgroundColor,
         body: SafeArea(
-          child: Center(
+          child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Hello!", style: headerTextStyle),
                 const SizedBox(
-                  height: 10,
+                  height: 80,
                 ),
-                Text("Welcome to Restore.", style: subtitleTextStyle),
+                Text("Sign Up",
+                    style: emphasizedHeader.copyWith(
+                        fontSize: 32, fontWeight: FontWeight.bold)),
                 const SizedBox(
-                  height: 50,
+                  height: 5,
                 ),
+                Text("Welcome to Restore.",
+                    style: emphasizedSubheader.copyWith(
+                        fontSize: 16, fontWeight: FontWeight.bold)),
+                const SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text("Register with your registered school mail",
+                      style: emphasizedSubheader.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: buttonColor)),
+                ),
+                const SizedBox(height: 5),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text("e.g you@school.edu.ng",
+                      style: emphasizedSubheader.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: buttonColor)),
+                ),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Container(
@@ -86,7 +111,7 @@ class _SignupState extends State<Signup> {
                       border: Border.all(
                         color: borderColor,
                       ),
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5.0),
@@ -116,7 +141,7 @@ class _SignupState extends State<Signup> {
                       border: Border.all(
                         color: borderColor,
                       ),
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5.0),
@@ -158,7 +183,7 @@ class _SignupState extends State<Signup> {
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: buttonColor,
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(6),
                       ),
                       child: Center(
                           child: Text("Sign Up", style: buttonTextStyle)),
@@ -166,7 +191,7 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 5,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -175,7 +200,7 @@ class _SignupState extends State<Signup> {
                     Text(
                       "Already have an account?",
                       style: GoogleFonts.poppins(
-                        fontSize: 18,
+                        fontSize: 16,
                       ),
                     ),
                     const SizedBox(
@@ -183,13 +208,48 @@ class _SignupState extends State<Signup> {
                     ),
                     GestureDetector(
                       onTap: () => widget.toggleView(),
-                      child: Text("Sign In",
+                      child: Text("Log In",
                           style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: buttonColor)),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: const Color.fromARGB(255, 31, 119, 190))),
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text("- OR -",
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold, fontSize: 20)),
+                const SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: borderColor),
+                      ),
+                      child: Center(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/images/google icon.png",
+                              height: 20, width: 20),
+                          const SizedBox(width: 10),
+                          Text("Log In With Google",
+                              style: GoogleFonts.poppins(
+                                  color: Colors.black, fontSize: 16)),
+                        ],
+                      )),
+                    ),
+                  ),
                 ),
               ],
             ),

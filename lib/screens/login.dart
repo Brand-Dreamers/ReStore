@@ -27,29 +27,53 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         backgroundColor: backgroundColor,
         body: SafeArea(
-          child: Center(
+          child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Hello Again!", style: headerTextStyle),
                 const SizedBox(
-                  height: 10,
+                  height: 80,
+                ),
+                Text("Log In",
+                    style: emphasizedHeader.copyWith(
+                        fontSize: 32, fontWeight: FontWeight.bold)),
+                const SizedBox(
+                  height: 5,
                 ),
                 Text("Welcome back, we've missed you!",
-                    style: subtitleTextStyle),
+                    style: emphasizedSubheader.copyWith(
+                        fontSize: 16, fontWeight: FontWeight.bold)),
                 const SizedBox(
-                  height: 50,
+                  height: 30,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text("Log in with your registered school mail",
+                      style: emphasizedSubheader.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: buttonColor)),
+                ),
+                const SizedBox(height: 5),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text("e.g you@school.edu.ng",
+                      style: emphasizedSubheader.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: buttonColor)),
+                ),
+                const SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
                     decoration: BoxDecoration(
                       color: fieldColor,
                       border: Border.all(
                         color: borderColor,
                       ),
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5.0),
@@ -78,7 +102,7 @@ class _LoginState extends State<Login> {
                       border: Border.all(
                         color: borderColor,
                       ),
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5.0),
@@ -117,24 +141,73 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: buttonColor,
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      child: Center(
-                          child: Text("Sign In", style: buttonTextStyle)),
+                      child:
+                          Center(child: Text("Log In", style: buttonTextStyle)),
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Forgot Password?, ",
+                        style: GoogleFonts.poppins(fontSize: 16)),
+                    Text("Click Here",
+                        style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            color: const Color.fromARGB(255, 180, 21, 10))),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text("- OR -",
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold, fontSize: 20)),
+                const SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: borderColor),
+                      ),
+                      child: Center(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/images/google icon.png",
+                              height: 20, width: 20),
+                          const SizedBox(width: 10),
+                          Text("Log In With Google",
+                              style: GoogleFonts.poppins(
+                                  color: Colors.black, fontSize: 16)),
+                        ],
+                      )),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "New User?",
+                      "Don't have an account?",
                       style: GoogleFonts.poppins(
-                        fontSize: 18,
+                        fontSize: 16,
                       ),
                     ),
                     const SizedBox(
@@ -144,9 +217,9 @@ class _LoginState extends State<Login> {
                       onTap: () => widget.toggleView(),
                       child: Text("Sign Up",
                           style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: buttonColor)),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: const Color.fromARGB(255, 31, 119, 190))),
                     ),
                   ],
                 ),

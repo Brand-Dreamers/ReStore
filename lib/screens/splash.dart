@@ -32,7 +32,7 @@ class Splash extends StatelessWidget {
                 style: GoogleFonts.poppins(fontSize: 14, color: subtitleColor))
           ],
         ),
-        nextScreen: const Start(),
+        nextScreen: const SlideContainer(),
         splashTransition: SplashTransition.fadeTransition,
         duration: 1500,
       ),
