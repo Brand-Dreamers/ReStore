@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
-import 'package:restore/screens/settings.dart';
 
 class ViewDocuments extends StatefulWidget {
   const ViewDocuments({Key? key}) : super(key: key);
@@ -24,7 +23,7 @@ class DocumentContainer extends StatelessWidget {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: []),
+            children: const []),
       ),
     );
   }
@@ -36,6 +35,7 @@ Future<DocumentContainer> getDocuments(String filter) async {
 
 class _ViewDocumentsState extends State<ViewDocuments> {
   String currentFilter = documentFilter[0];
+  late List<DocumentContainer> documents;
 
   void setFilter(String filter) => setState(() => currentFilter = filter);
 
@@ -56,15 +56,6 @@ class _ViewDocumentsState extends State<ViewDocuments> {
         backgroundColor: backgroundColor,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          leading: GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Settings()));
-              },
-              child: const Icon(
-                Icons.menu,
-                color: subtitleColor,
-              )),
           title: Text(
             "View Documents",
             style: subtitleTextStyle,
@@ -98,11 +89,7 @@ class _ViewDocumentsState extends State<ViewDocuments> {
                       imageURL: "assets/images/fatal error.png");
                 }
               })),
-        )),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.upload_file_outlined, color: iconColor),
-          onPressed: () {}),
-        );
+        )));
   }
 }
 

@@ -42,35 +42,27 @@ class _SignupState extends State<Signup> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 80,
+                  height: 30,
                 ),
                 Text("Sign Up",
                     style: emphasizedHeader.copyWith(
-                        fontSize: 32, fontWeight: FontWeight.bold)),
+                        fontSize: 30, fontWeight: FontWeight.w800)),
                 const SizedBox(
                   height: 5,
                 ),
-                Text("Welcome to Restore.",
+                Text("Welcome to Restore",
                     style: emphasizedSubheader.copyWith(
-                        fontSize: 16, fontWeight: FontWeight.bold)),
+                        fontSize: 15, fontWeight: FontWeight.w600)),
                 const SizedBox(
                   height: 30,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text("Register with your registered school mail",
+                  child: Text(
+                      "Register with your registered school mail e.g you@school.edu.ng",
                       style: emphasizedSubheader.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: buttonColor)),
-                ),
-                const SizedBox(height: 5),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text("e.g you@school.edu.ng",
-                      style: emphasizedSubheader.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w400,
                           color: buttonColor)),
                 ),
                 const SizedBox(height: 30),
@@ -78,10 +70,7 @@ class _SignupState extends State<Signup> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: fieldColor,
-                      border: Border.all(
-                        color: borderColor,
-                      ),
+                      color: const Color.fromARGB(255, 220, 220, 220),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Padding(
@@ -91,8 +80,8 @@ class _SignupState extends State<Signup> {
                         decoration: const InputDecoration(
                           prefixIcon: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(Icons.mail_outline_sharp,
-                                  size: 22, color: iconColor)),
+                              child: Icon(Icons.mail_outline_rounded,
+                                  size: 20, color: iconColor)),
                           border: InputBorder.none,
                           hintText: "Email",
                         ),
@@ -108,9 +97,6 @@ class _SignupState extends State<Signup> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: fieldColor,
-                      border: Border.all(
-                        color: borderColor,
-                      ),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Padding(
@@ -121,8 +107,8 @@ class _SignupState extends State<Signup> {
                         decoration: const InputDecoration(
                           prefixIcon: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(Icons.lock_outline_sharp,
-                                  size: 22, color: iconColor)),
+                              child: Icon(Icons.lock_outline_rounded,
+                                  size: 20, color: iconColor)),
                           border: InputBorder.none,
                           hintText: "Password",
                         ),
@@ -138,9 +124,6 @@ class _SignupState extends State<Signup> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: fieldColor,
-                      border: Border.all(
-                        color: borderColor,
-                      ),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Padding(
@@ -151,8 +134,8 @@ class _SignupState extends State<Signup> {
                         decoration: const InputDecoration(
                           prefixIcon: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(Icons.lock_outline_sharp,
-                                  size: 22, color: iconColor)),
+                              child: Icon(Icons.lock_outline_rounded,
+                                  size: 20, color: iconColor)),
                           border: InputBorder.none,
                           hintText: "Confirm Password",
                         ),
@@ -180,13 +163,16 @@ class _SignupState extends State<Signup> {
                       }
                     },
                     child: Container(
+                      height: 50,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: buttonColor,
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Center(
-                          child: Text("Sign Up", style: buttonTextStyle)),
+                          child: Text("Sign Up",
+                              style: buttonTextStyle.copyWith(
+                                  fontSize: 14, fontWeight: FontWeight.w400))),
                     ),
                   ),
                 ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/components/user.dart';
-import 'package:restore/screens/home.dart';
+import 'package:restore/screens/landing_page.dart';
 
 class Avatar extends StatefulWidget {
   const Avatar({Key? key}) : super(key: key);
@@ -112,7 +112,7 @@ class _AvatarState extends State<Avatar> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Home()));
+                                builder: (context) => const LandingPage()));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

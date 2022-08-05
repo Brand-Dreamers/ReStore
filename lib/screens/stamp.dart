@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:restore/components/pdf_handler.dart';
 import 'package:restore/components/constants.dart';
-import 'package:restore/screens/settings.dart';
 
 class Stamp extends StatefulWidget {
   const Stamp({Key? key}) : super(key: key);
@@ -14,7 +13,7 @@ class Stamp extends StatefulWidget {
 class _StampState extends State<Stamp> {
   late Future<PDFData> futureData;
   late PDFData pdfData;
-  late PdfControllerPinch pinchController;
+  late PdfController _controller;
 
   @override
   void initState() {
@@ -22,8 +21,8 @@ class _StampState extends State<Stamp> {
     futureData = loadPDF();
     futureData.then((value) {
       pdfData = value;
-      pinchController =
-          PdfControllerPinch(document: PdfDocument.openData(value.data));
+      _controller =
+          PdfController(document: PdfDocument.openData(value.data));
     });
   }
 
@@ -38,15 +37,6 @@ class _StampState extends State<Stamp> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Settings()));
-            },
-            child: const Icon(
-              Icons.menu,
-              color: subtitleColor,
-            )),
         title: Text(
           "Stamp Document",
           style: subtitleTextStyle,
@@ -54,8 +44,8 @@ class _StampState extends State<Stamp> {
         elevation: 0.0,
       ),
       body: SafeArea(
-        child: Center(
-          child: FutureBuilder(
+        child: Stack(children: [
+          FutureBuilder(
               future: futureData,
               builder: ((context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -68,7 +58,13 @@ class _StampState extends State<Stamp> {
                           message: "No file was selected!",
                           imageURL: "assets/images/error.png");
                     } else {
-                      return PdfViewPinch(controller: pinchController);
+                      return DragTarget(
+                        builder: (context, candidateData, rejectedData) {
+                          return PdfView(controller: _controller);
+                        },
+                        onWillAccept: (data) => data == "Stamp Image",
+                        onAccept: (data) {},
+                      );
                     }
                   } else {
                     return const NotificationContainer(
@@ -81,7 +77,13 @@ class _StampState extends State<Stamp> {
                       imageURL: "assets/images/fatal error.png");
                 }
               })),
-        ),
+          Draggable(
+            child: Image.asset("assets/images/dummy stamp.png", height: 150, width: 150),
+            feedback: Image.asset("assets/images/dummy stamp.png", height: 150, width: 150),
+            childWhenDragging: Image.asset("assets/images/dummy stamp.png", height: 150, width: 150),
+
+          ),
+        ]),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showStampPanel(pdfData),
@@ -93,6 +95,14 @@ class _StampState extends State<Stamp> {
       ),
     );
   }
+}
+
+class DragData {
+  String? dataName;
+  double? xOffset;
+  double? yOffset;
+
+  DragData({this.dataName, this.xOffset, this.yOffset});
 }
 
 class StampPanel extends StatefulWidget {
@@ -109,6 +119,7 @@ class _StampPanelState extends State<StampPanel> {
   @override
   void dispose() {
     _controller.dispose();
+    _controller.text = widget.data.filename;
     super.dispose();
   }
 
@@ -166,7 +177,7 @@ class _StampPanelState extends State<StampPanel> {
               child: GestureDetector(
                 onTap: () {
                   widget.data.filename = _controller.text;
-                  createAndSavePDF(widget.data);
+                  //createAndSavePDF(widget.data);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(20),

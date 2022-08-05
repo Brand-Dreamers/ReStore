@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/components/user.dart';
-import 'package:restore/screens/home.dart';
+import 'package:restore/screens/landing_page.dart';
 
 class Login extends StatefulWidget {
   final Function toggleView;
@@ -33,35 +33,21 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 80,
-                ),
-                Text("Log In",
-                    style: emphasizedHeader.copyWith(
-                        fontSize: 32, fontWeight: FontWeight.bold)),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text("Welcome back, we've missed you!",
-                    style: emphasizedSubheader.copyWith(
-                        fontSize: 16, fontWeight: FontWeight.bold)),
-                const SizedBox(
                   height: 30,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text("Log in with your registered school mail",
-                      style: emphasizedSubheader.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: buttonColor)),
+                Text("Log In", style: emphasizedHeader),
+                Text("Welcome back, we've missed you!",
+                    style: emphasizedSubheader),
+                const SizedBox(
+                  height: 50,
                 ),
-                const SizedBox(height: 5),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text("e.g you@school.edu.ng",
+                  child: Text(
+                      "Log in with your registered school mail e.g you@school.edu.ng",
                       style: emphasizedSubheader.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w400,
                           color: buttonColor)),
                 ),
                 const SizedBox(height: 30),
@@ -70,9 +56,6 @@ class _LoginState extends State<Login> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: fieldColor,
-                      border: Border.all(
-                        color: borderColor,
-                      ),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Padding(
@@ -82,8 +65,8 @@ class _LoginState extends State<Login> {
                         decoration: const InputDecoration(
                           prefixIcon: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(Icons.mail_outline_sharp,
-                                  size: 22, color: iconColor)),
+                              child: Icon(Icons.mail_outline_rounded,
+                                  size: 20, color: iconColor)),
                           border: InputBorder.none,
                           hintText: "Email",
                         ),
@@ -99,9 +82,6 @@ class _LoginState extends State<Login> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: fieldColor,
-                      border: Border.all(
-                        color: borderColor,
-                      ),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Padding(
@@ -112,8 +92,8 @@ class _LoginState extends State<Login> {
                         decoration: const InputDecoration(
                           prefixIcon: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(Icons.lock_outline_sharp,
-                                  size: 22, color: iconColor)),
+                              child: Icon(Icons.lock_outline_rounded,
+                                  size: 20, color: iconColor)),
                           border: InputBorder.none,
                           hintText: "Password",
                         ),
@@ -135,16 +115,19 @@ class _LoginState extends State<Login> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Home()));
+                              builder: (context) => const LandingPage()));
                     },
                     child: Container(
+                      height: 50,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: buttonColor,
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child:
-                          Center(child: Text("Log In", style: buttonTextStyle)),
+                      child: Center(
+                          child: Text("Log In",
+                              style: buttonTextStyle.copyWith(
+                                  fontSize: 14, fontWeight: FontWeight.w400))),
                     ),
                   ),
                 ),

@@ -41,119 +41,119 @@ class _SlideContainerState extends State<SlideContainer> {
       child: Scaffold(
         backgroundColor: backgroundColor,
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  height: size.height * 0.75,
-                  child: PageView.builder(
-                      controller: pageController,
-                      pageSnapping: true,
-                      itemCount: length,
-                      onPageChanged: (index) {
-                        setState(() {
-                          currentSlide = index;
-                          isLast = (index == length - 1);
-                        });
-                      },
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return slides[index];
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: size.height * 0.75,
+                    child: PageView.builder(
+                        controller: pageController,
+                        pageSnapping: true,
+                        itemCount: length,
+                        onPageChanged: (index) {
+                          setState(() {
+                            currentSlide = index;
+                            isLast = (index == length - 1);
+                          });
+                        },
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => slides[index]),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: List.generate(length, (index) {
+                        return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 24,
+                                height: 3,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(1),
+                                    color: (index == currentSlide)
+                                        ? buttonColor
+                                        : const Color.fromARGB(
+                                            255, 230, 230, 227)),
+                              ),
+                              const SizedBox(width: 2.5),
+                            ]);
                       }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: List.generate(length, (index) {
-                      return Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 3,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(1),
-                                  color: (index == currentSlide)
-                                      ? buttonColor
-                                      : const Color.fromARGB(
-                                          255, 230, 230, 227)),
-                            ),
-                            const SizedBox(width: 2.5),
-                          ]);
-                    }),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              currentSlide = length - 1;
-                              pageController.animateToPage(currentSlide,
-                                  duration: const Duration(milliseconds: 750),
-                                  curve: Curves.easeOut);
-                            });
-                          },
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
+                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                currentSlide = length - 1;
+                                pageController.animateToPage(currentSlide,
+                                    duration: const Duration(milliseconds: 750),
+                                    curve: Curves.easeOut);
+                              });
+                            },
                             child: Text("Skip",
-                                style:
-                                    emphasizedSubheader.copyWith(fontSize: 18)),
-                          )),
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (!isLast) {
-                                pageController.nextPage(
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.easeIn);
-                              } else {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const AuthService()));
-                              }
-                            });
-                          },
-                          child: Container(
-                            height: 40,
-                            width: isLast ? 100 : 40,
-                            decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Center(
-                              child: isLast
-                                  ? Text("Get Started",
-                                      style: emphasizedHeader.copyWith(
-                                          color: backgroundColor,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal))
-                                  : const Icon(
-                                      Icons.arrow_right_alt,
-                                      color: backgroundColor,
-                                    ),
-                            ),
-                          )),
-                    ],
+                                style: emphasizedSubheader.copyWith(
+                                    fontSize: 18))),
+                        GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (!isLast) {
+                                  pageController.nextPage(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeIn);
+                                } else {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const AuthService()));
+                                }
+                              });
+                            },
+                            child: Container(
+                              height: 40,
+                              width: isLast ? 100 : 40,
+                              decoration: BoxDecoration(
+                                color: buttonColor,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Center(
+                                child: isLast
+                                    ? Text("Get Started",
+                                        style: emphasizedHeader.copyWith(
+                                            color: backgroundColor,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.normal))
+                                    : const Icon(
+                                        Icons.arrow_right_alt,
+                                        color: backgroundColor,
+                                      ),
+                              ),
+                            )),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

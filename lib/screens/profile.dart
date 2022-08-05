@@ -60,7 +60,7 @@ class _ProfileState extends State<Profile> {
                       decoration: const InputDecoration(
                         prefixIcon: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Icon(Icons.person_outline_sharp,
+                            child: Icon(Icons.person_outline_rounded,
                                 size: 22, color: iconColor)),
                         border: InputBorder.none,
                         hintText: "First Name",
@@ -89,7 +89,7 @@ class _ProfileState extends State<Profile> {
                       decoration: const InputDecoration(
                         prefixIcon: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Icon(Icons.person_outline,
+                            child: Icon(Icons.person_outline_rounded,
                                 size: 22, color: iconColor)),
                         border: InputBorder.none,
                         hintText: "Last Name",
@@ -247,7 +247,7 @@ class _ProfileState extends State<Profile> {
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: buttonColor,
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                     child:
                         Center(child: Text("Submit", style: buttonTextStyle)),

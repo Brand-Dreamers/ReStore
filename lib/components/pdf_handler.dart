@@ -23,14 +23,18 @@ Future<PDFData> loadPDF() async {
   return PDFData(filename: "Null file", data: Uint8List(0));
 }
 
-Future<bool> createAndSavePDF(PDFData pdfData) async {
+Future<bool> createAndSavePDF(PDFData pdfData, Uint8List stampData,
+    double xOffset, double yOffset) async {
   if (pdfData.data.isEmpty) return false;
   final pdf = pw.Document();
   final pdfImage = pw.MemoryImage(pdfData.data);
+  final stampImage = pw.MemoryImage(stampData);
   pdf.addPage(pw.Page(build: (pw.Context context) {
     return pw.Center(
-        child:
-            pdfData.data.isEmpty ? pw.Text("Empty File") : pw.Image(pdfImage));
+        child: pw.Stack(children: [
+      pw.Image(pdfImage),
+      pw.Positioned(left: xOffset, top: yOffset, child: pw.Image(stampImage))
+    ]));
   }));
 
   final file = File(pdfData.filename + '-stamped.pdf');

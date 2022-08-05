@@ -1,374 +1,182 @@
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/components/user.dart';
-import 'package:restore/screens/settings.dart';
-import 'package:restore/screens/stamp.dart';
+import 'package:restore/screens/stamp_category.dart';
 import 'package:restore/screens/upload.dart';
 import 'package:restore/screens/view_documents.dart';
 
+class HomeSlide extends StatelessWidget {
+  final String imageURL;
+  final String header;
+  final String description;
+
+  const HomeSlide({
+    Key? key,
+    required this.imageURL,
+    required this.header,
+    required this.description,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(width: 1.0, color: buttonColor)),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            imageURL,
+            width: 150,
+            height: 150,
+          ),
+          Text(header, style: emphasizedHeader.copyWith(fontSize: 20)),
+          Text(description, style: emphasizedSubheader.copyWith(fontSize: 14)),
+        ],
+      ),
+    );
+  }
+}
+
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final VoidCallback openMenu;
+  const Home({Key? key, required this.openMenu}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  List<HomeSlide> homeSlides = [
+    const HomeSlide(
+      imageURL: "assets/images/stamp.png",
+      header: "Stamp",
+      description: "Get your documents stamped",
+    ),
+    const HomeSlide(
+      imageURL: "assets/images/upload.png",
+      header: "Upload",
+      description: "Save and upload your documents",
+    ),
+    const HomeSlide(
+      imageURL: "assets/images/document.png",
+      header: "Documents",
+      description: "View your uploaded and stamped documents",
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    double containerHeight = size.height * 0.3;
-    double imageSize = containerHeight * 0.6;
-    double leftOffset = containerHeight - 80;
-    double topOffset = containerHeight - 100;
 
-    void _showAccountPanel() {
-      showModalBottomSheet(
-          context: context, builder: (context) => const AccountPanel());
+    void _navigateStamp() => Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const StampCategory()));
+
+    void _navigateUpload() => Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Upload()));
+
+    void _navigateDocuments() => Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const ViewDocuments()));
+
+    void _executeOnTap(int index) {
+      if (index == 0) {
+        _navigateStamp();
+      } else if (index == 1) {
+        _navigateUpload();
+      } else if (index == 2) {
+        _navigateDocuments();
+      }
     }
 
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Settings()));
-            },
-            child: const Icon(
-              Icons.menu,
-              color: subtitleColor,
-            )),
-        title: Text(
-          "Restore",
-          style: headerEmphasisTextStyle,
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () => _showAccountPanel(),
-            child: CircleAvatar(
-              backgroundImage:
-                  NetworkImage(api + User.getUser().avatarURL + ext),
-              radius: 15.0,
-              backgroundColor: Colors.transparent,
-            ),
-          ),
-        ],
-        elevation: 0.0,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Welcome, " + User.getUser().surname,
-                  style: littleHeaderTextStyle,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  "What would you like to do today?",
-                  style: subtitleTextStyle,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.topLeft,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 2.0, vertical: 2.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Stamp()));
-                        },
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: containerColor,
-                                borderRadius: BorderRadius.circular(5.0)),
-                            height: containerHeight,
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  "assets/images/stamp.png",
-                                  height: imageSize,
-                                  width: imageSize,
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    "Stamp",
-                                    style: littleHeaderTextStyle,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: leftOffset,
-                      top: topOffset,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 2.0, vertical: 2.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Upload()));
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: containerColor,
-                                  borderRadius: BorderRadius.circular(5.0)),
-                              height: containerHeight,
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/upload.png",
-                                    height: imageSize,
-                                    width: imageSize,
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "Upload",
-                                      style: littleHeaderTextStyle,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: topOffset * 2,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 2.0, vertical: 2.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ViewDocuments()));
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: containerColor,
-                                  borderRadius: BorderRadius.circular(5.0)),
-                              height: containerHeight,
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/document.png",
-                                    height: imageSize,
-                                    width: imageSize,
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "Documents",
-                                      style: littleHeaderTextStyle,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ]),
-        )),
-      ),
-    );
-  }
-}
-
-class AccountPanel extends StatelessWidget {
-  const AccountPanel({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    User user = User.getUser();
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      height: 500,
-      width: size.width,
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Column(children: [
-        Image.network(
-          user.avatarURL,
-          width: size.width - 10,
-          height: 300,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: borderColor,
-              ),
-              borderRadius: BorderRadius.circular(5.0),
-              color: backgroundColor,
-              boxShadow: const [
-                BoxShadow(
-                  color: containerColor,
-                )
-              ]),
-          child: Center(
-            child: Text(
-              user.surname + " " + user.lastname,
-              style: littleHeaderTextStyle,
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: borderColor,
-              ),
-              borderRadius: BorderRadius.circular(5.0),
-              color: backgroundColor,
-              boxShadow: const [
-                BoxShadow(
-                  color: containerColor,
-                )
-              ]),
-          child: Center(
-            child: Text(
-              user.email,
-              style: littleHeaderTextStyle,
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
+    return SizedBox(
+      height: size.height,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: borderColor,
-                    ),
-                    borderRadius: BorderRadius.circular(5.0),
-                    color: backgroundColor,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: containerColor,
-                      )
-                    ]),
-                child: Center(
-                  child: Text(
-                    user.college,
-                    style: littleHeaderTextStyle,
+              IconButton(
+                  icon: const Icon(
+                    Icons.menu,
+                    color: subtitleColor,
                   ),
-                ),
+                  onPressed: widget.openMenu),
+              Text(
+                "Restore",
+                style: headerEmphasisTextStyle,
               ),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: borderColor,
+              CircleAvatar(
+                backgroundImage:
+                    NetworkImage(api + User.getUser().avatarURL + ext),
+                radius: 15.0,
+                backgroundColor: Colors.transparent,
+              ),
+            ],
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 20,
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
-                    color: backgroundColor,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: containerColor,
-                      )
-                    ]),
-                child: Center(
-                  child: Text(
-                    user.department,
-                    style: littleHeaderTextStyle,
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: borderColor,
+                    Text(
+                      "Welcome, " + User.getUser().lastname,
+                      style: emphasizedHeader,
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
-                    color: backgroundColor,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: containerColor,
-                      )
-                    ]),
-                child: Center(
-                  child: Text(
-                    user.level,
-                    style: littleHeaderTextStyle,
-                  ),
-                ),
-              ),
-            ]),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: borderColor,
-              ),
-              borderRadius: BorderRadius.circular(5.0),
-              color: backgroundColor,
-              boxShadow: const [
-                BoxShadow(
-                  color: containerColor,
-                )
-              ]),
-          child: Center(
-            child: Text(
-              user.matricNumber,
-              style: littleHeaderTextStyle,
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "What would you like to do today?",
+                      style: emphasizedSubheader,
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                  onTap: () => _executeOnTap(0),
+                                  child: homeSlides[0]),
+                              GestureDetector(
+                                  onTap: () => _executeOnTap(1),
+                                  child: homeSlides[1]),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                  onTap: () => _executeOnTap(2),
+                                  child: homeSlides[2]),
+                            ],
+                          ),
+                        ]),
+                  ]),
             ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

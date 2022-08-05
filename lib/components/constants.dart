@@ -10,7 +10,7 @@ const String login = "/signin";
 const String register = "/signup";
 
 const backgroundColor = Color.fromARGB(255, 250, 255, 250);
-const fieldColor = Color.fromARGB(0, 136, 129, 129);
+const fieldColor = Color.fromARGB(255, 235, 235, 235);
 const buttonColor = Color.fromARGB(255, 0, 158, 96);
 
 const headerColor = Colors.black54;
@@ -188,7 +188,7 @@ class Slide extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          Image.asset(slideImageURL),
+          Center(child: Image.asset(slideImageURL)),
         ],
       ),
     );
