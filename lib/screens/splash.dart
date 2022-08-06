@@ -29,7 +29,7 @@ class Splash extends StatelessWidget {
                   color: buttonColor),
             ),
             Text("By The Dreamers",
-                style: GoogleFonts.poppins(fontSize: 14, color: subtitleColor))
+                style: emphasizedSubheader.copyWith(fontSize: 14))
           ],
         ),
         nextScreen: const SlideContainer(),

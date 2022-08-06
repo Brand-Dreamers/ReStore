@@ -19,6 +19,13 @@ Future<bool> willPop() async {
 class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  late bool _showPassword;
+
+  @override
+  void initState() {
+    super.initState();
+    _showPassword = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +40,17 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 30,
+                  height: 50,
                 ),
-                Text("Log In", style: emphasizedHeader),
-                Text("Welcome back, we've missed you!",
-                    style: emphasizedSubheader),
+                Text("Log In",
+                    style: emphasizedHeader.copyWith(
+                        fontSize: 28, fontWeight: FontWeight.w800)),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text("Hi, Welcome back!",
+                    style: emphasizedSubheader.copyWith(
+                        fontSize: 16, fontWeight: FontWeight.w600)),
                 const SizedBox(
                   height: 50,
                 ),
@@ -50,7 +63,7 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.w400,
                           color: buttonColor)),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
@@ -62,13 +75,14 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.only(left: 5.0),
                       child: TextField(
                         controller: _emailController,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
+                        decoration: InputDecoration(
+                          prefixIcon: const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 2.0),
                               child: Icon(Icons.mail_outline_rounded,
                                   size: 20, color: iconColor)),
                           border: InputBorder.none,
                           hintText: "Email",
+                          hintStyle: GoogleFonts.poppins(color: Colors.grey),
                         ),
                       ),
                     ),
@@ -88,21 +102,27 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.only(left: 5.0),
                       child: TextField(
                         controller: _passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(Icons.lock_outline_rounded,
-                                  size: 20, color: iconColor)),
-                          border: InputBorder.none,
-                          hintText: "Password",
-                        ),
+                        obscureText: !_showPassword,
+                        decoration: InputDecoration(
+                            prefixIcon: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 2.0),
+                                child: Icon(Icons.lock_outline_rounded,
+                                    size: 20, color: iconColor)),
+                            border: InputBorder.none,
+                            hintText: "Password",
+                            hintStyle: GoogleFonts.poppins(color: Colors.grey),
+                            suffixIcon: GestureDetector(
+                                child: Icon(_showPassword ? Icons.visibility_off : Icons.visibility,
+                                        color: Colors.grey),
+                                onTap: () {
+                                  setState(() => _showPassword = !_showPassword);
+                                })),
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -119,47 +139,46 @@ class _LoginState extends State<Login> {
                     },
                     child: Container(
                       height: 50,
-                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: buttonColor,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(6),
                       ),
                       child: Center(
                           child: Text("Log In",
                               style: buttonTextStyle.copyWith(
-                                  fontSize: 14, fontWeight: FontWeight.w400))),
+                                  fontSize: 16, fontWeight: FontWeight.w400))),
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("Forgot Password?, ",
-                        style: GoogleFonts.poppins(fontSize: 16)),
+                        style: GoogleFonts.poppins(fontSize: 14)),
                     Text("Click Here",
                         style: GoogleFonts.poppins(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: const Color.fromARGB(255, 180, 21, 10))),
                   ],
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Text("- OR -",
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold, fontSize: 20)),
+                        fontWeight: FontWeight.w500, fontSize: 20)),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
                     onTap: () {},
                     child: Container(
-                      padding: const EdgeInsets.all(20),
+                      height: 50,
                       decoration: BoxDecoration(
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(6),
@@ -170,11 +189,12 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset("assets/images/google icon.png",
-                              height: 20, width: 20),
+                              height: 40, width: 40),
                           const SizedBox(width: 10),
                           Text("Log In With Google",
                               style: GoogleFonts.poppins(
-                                  color: Colors.black, fontSize: 16)),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500)),
                         ],
                       )),
                     ),
@@ -190,7 +210,7 @@ class _LoginState extends State<Login> {
                     Text(
                       "Don't have an account?",
                       style: GoogleFonts.poppins(
-                        fontSize: 16,
+                        fontSize: 14,
                       ),
                     ),
                     const SizedBox(
@@ -200,7 +220,7 @@ class _LoginState extends State<Login> {
                       onTap: () => widget.toggleView(),
                       child: Text("Sign Up",
                           style: GoogleFonts.poppins(
-                              fontSize: 16,
+                              fontSize: 14,
                               fontWeight: FontWeight.w400,
                               color: const Color.fromARGB(255, 31, 119, 190))),
                     ),

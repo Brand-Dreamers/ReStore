@@ -58,18 +58,18 @@ class _ViewDocumentsState extends State<ViewDocuments> {
           backgroundColor: Colors.transparent,
           title: Text(
             "View Documents",
-            style: subtitleTextStyle,
+            style: emphasizedSubheader.copyWith(fontSize: 16),
           ),
           actions: [
             TextButton.icon(
                 onPressed: () => _showFilterPanel(currentFilter),
                 icon: const Icon(
                   Icons.filter_list,
-                  color: subtitleColor,
+                  color: Colors.black,
                 ),
                 label: Text(
                   "Filter",
-                  style: iconButtonTextStyle,
+                  style: emphasizedSubheader.copyWith(fontSize: 14),
                 ))
           ],
           elevation: 0.0,
@@ -82,7 +82,7 @@ class _ViewDocumentsState extends State<ViewDocuments> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Wait();
                 } else if (snapshot.connectionState == ConnectionState.done) {
-                  return Text("Error", style: littleHeaderTextStyle);
+                  return Text("Error", style: emphasizedHeader.copyWith(fontSize: 16));
                 } else {
                   return const NotificationContainer(
                       message: "An error occured",
@@ -113,7 +113,7 @@ class _FilterPanelState extends State<FilterPanel> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Filter By", style: littleHeaderTextStyle),
+            Text("Filter By", style: emphasizedHeader.copyWith(fontSize: 16)),
             const SizedBox(
               height: 30,
             ),

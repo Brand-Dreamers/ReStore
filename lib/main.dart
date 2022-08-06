@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget
     return MaterialApp(
       title: 'Restore',
       themeMode: ThemeMode.system,
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
         primarySwatch: Colors.green,

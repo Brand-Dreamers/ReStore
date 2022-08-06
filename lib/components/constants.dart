@@ -10,16 +10,10 @@ const String login = "/signin";
 const String register = "/signup";
 
 const backgroundColor = Color.fromARGB(255, 250, 255, 250);
-const fieldColor = Color.fromARGB(255, 235, 235, 235);
+const fieldColor = Color.fromARGB(255, 240, 240, 240);
 const buttonColor = Color.fromARGB(255, 0, 158, 96);
-
-const headerColor = Colors.black54;
-const subtitleColor = Colors.black38;
 const iconColor = Colors.black45;
 const borderColor = Colors.black12;
-const lightTextColor = Colors.white;
-const containerColor = Color.fromARGB(10, 10, 10, 0);
-const errorColor = Color.fromARGB(255, 197, 20, 7);
 
 TextStyle emphasizedHeader = GoogleFonts.poppins(
     fontWeight: FontWeight.w500, fontSize: 28, color: Colors.black);
@@ -27,32 +21,10 @@ TextStyle emphasizedHeader = GoogleFonts.poppins(
 TextStyle emphasizedSubheader = GoogleFonts.poppins(
     fontWeight: FontWeight.w300, fontSize: 14, color: Colors.grey);
 
-TextStyle atUserTextStyle = GoogleFonts.poppins()
-    .copyWith(fontWeight: FontWeight.bold, fontSize: 16, color: buttonColor);
-
-TextStyle headerEmphasisTextStyle = GoogleFonts.poppins()
-    .copyWith(fontWeight: FontWeight.bold, fontSize: 24, color: buttonColor);
-
-TextStyle headerTextStyle = GoogleFonts.poppins()
-    .copyWith(fontWeight: FontWeight.bold, fontSize: 36, color: headerColor);
-
-TextStyle headerErrorTextStyle = GoogleFonts.poppins()
-    .copyWith(fontWeight: FontWeight.bold, fontSize: 22, color: errorColor);
-
-TextStyle littleHeaderTextStyle = GoogleFonts.poppins()
-    .copyWith(fontWeight: FontWeight.bold, fontSize: 20, color: headerColor);
-
-TextStyle subtitleTextStyle = GoogleFonts.poppins()
-    .copyWith(fontWeight: FontWeight.w300, fontSize: 20, color: subtitleColor);
-
-TextStyle normalTextStyle =
-    GoogleFonts.poppins().copyWith(fontSize: 36, color: headerColor);
-
 TextStyle buttonTextStyle = GoogleFonts.poppins()
-    .copyWith(fontWeight: FontWeight.bold, color: lightTextColor, fontSize: 16);
+    .copyWith(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white);
 
-TextStyle iconButtonTextStyle =
-    GoogleFonts.poppins().copyWith(color: buttonColor, fontSize: 16);
+const double stampImageSize = 150.0;
 
 final List<String> colleges = [
   "COLAMRUD",
@@ -227,7 +199,7 @@ class Wait extends StatelessWidget {
       height: 120,
       width: 150,
       decoration: BoxDecoration(
-        color: containerColor,
+        color: Colors.blueGrey,
         borderRadius: BorderRadius.circular(5.0),
       ),
       child: Column(
@@ -242,7 +214,7 @@ class Wait extends StatelessWidget {
           ),
           Text(
             message,
-            style: subtitleTextStyle,
+            style: emphasizedSubheader.copyWith(fontSize: 16),
           ),
         ],
       ),
@@ -289,7 +261,7 @@ class NotificationContainer extends StatelessWidget {
           ),
           Text(
             message,
-            style: subtitleTextStyle,
+            style: emphasizedSubheader.copyWith(fontSize: 16),
           ),
         ],
       ),

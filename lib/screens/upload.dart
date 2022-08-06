@@ -39,7 +39,7 @@ class _UploadState extends State<Upload> {
         backgroundColor: Colors.transparent,
         title: Text(
           "Upload Document",
-          style: subtitleTextStyle,
+          style: emphasizedSubheader.copyWith(fontSize: 16),
         ),
         elevation: 0.0,
       ),
@@ -85,7 +85,7 @@ class _UploadPanelState extends State<UploadPanel> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Upload Document", style: littleHeaderTextStyle),
+            Text("Upload Document", style: emphasizedHeader.copyWith(fontSize: 16)),
             const SizedBox(
               height: 50,
             ),

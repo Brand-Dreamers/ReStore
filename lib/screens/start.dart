@@ -131,7 +131,7 @@ class _SlideContainerState extends State<SlideContainer> {
                             },
                             child: Container(
                               height: 40,
-                              width: isLast ? 100 : 40,
+                              width: isLast ? 100 : 50,
                               decoration: BoxDecoration(
                                 color: buttonColor,
                                 borderRadius: BorderRadius.circular(6),

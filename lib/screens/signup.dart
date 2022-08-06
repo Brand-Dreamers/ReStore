@@ -20,6 +20,8 @@ class _SignupState extends State<Signup> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmController = TextEditingController();
+  late bool _showPassword;
+  late bool _showConfirmPassword;
 
   @override
   void dispose() {
@@ -27,6 +29,13 @@ class _SignupState extends State<Signup> {
     _passwordController.dispose();
     _confirmController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _showPassword = false;
+    _showConfirmPassword = false;
   }
 
   @override
@@ -42,19 +51,19 @@ class _SignupState extends State<Signup> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 30,
+                  height: 50,
                 ),
                 Text("Sign Up",
                     style: emphasizedHeader.copyWith(
-                        fontSize: 30, fontWeight: FontWeight.w800)),
+                        fontSize: 28, fontWeight: FontWeight.w800)),
                 const SizedBox(
                   height: 5,
                 ),
                 Text("Welcome to Restore",
                     style: emphasizedSubheader.copyWith(
-                        fontSize: 15, fontWeight: FontWeight.w600)),
+                        fontSize: 16, fontWeight: FontWeight.w600)),
                 const SizedBox(
-                  height: 30,
+                  height: 50,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -65,25 +74,26 @@ class _SignupState extends State<Signup> {
                           fontWeight: FontWeight.w400,
                           color: buttonColor)),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 220, 220, 220),
+                      color: fieldColor,
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5.0),
                       child: TextField(
                         controller: _emailController,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
+                        decoration: InputDecoration(
+                          prefixIcon: const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 2.0),
                               child: Icon(Icons.mail_outline_rounded,
                                   size: 20, color: iconColor)),
                           border: InputBorder.none,
                           hintText: "Email",
+                          hintStyle: GoogleFonts.poppins(color: Colors.grey),
                         ),
                       ),
                     ),
@@ -103,15 +113,21 @@ class _SignupState extends State<Signup> {
                       padding: const EdgeInsets.only(left: 5.0),
                       child: TextField(
                         controller: _passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(Icons.lock_outline_rounded,
-                                  size: 20, color: iconColor)),
-                          border: InputBorder.none,
-                          hintText: "Password",
-                        ),
+                        obscureText: !_showPassword,
+                        decoration: InputDecoration(
+                            prefixIcon: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 2.0),
+                                child: Icon(Icons.lock_outline_rounded,
+                                    size: 20, color: iconColor)),
+                            border: InputBorder.none,
+                            hintText: "Password",
+                            hintStyle: GoogleFonts.poppins(color: Colors.grey),
+                            suffixIcon: GestureDetector(
+                                child: Icon(_showPassword ? Icons.visibility_off : Icons.visibility,
+                                        color: Colors.grey),
+                                onTap: () {
+                                  setState(() => _showPassword = !_showPassword);
+                                })),
                       ),
                     ),
                   ),
@@ -130,21 +146,29 @@ class _SignupState extends State<Signup> {
                       padding: const EdgeInsets.only(left: 5.0),
                       child: TextField(
                         controller: _confirmController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
+                        obscureText: !_showConfirmPassword,
+                        decoration: InputDecoration(
+                          prefixIcon: const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 2.0),
                               child: Icon(Icons.lock_outline_rounded,
                                   size: 20, color: iconColor)),
                           border: InputBorder.none,
                           hintText: "Confirm Password",
+                          hintStyle: GoogleFonts.poppins(color: Colors.grey),
+                          suffixIcon: GestureDetector(
+                              child: Icon(_showConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                                        color: Colors.grey),
+                              onTap: () {
+                                setState(() =>
+                                    _showConfirmPassword = !_showConfirmPassword);
+                              }),
                         ),
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -164,7 +188,6 @@ class _SignupState extends State<Signup> {
                     },
                     child: Container(
                       height: 50,
-                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: buttonColor,
                         borderRadius: BorderRadius.circular(6),
@@ -172,7 +195,7 @@ class _SignupState extends State<Signup> {
                       child: Center(
                           child: Text("Sign Up",
                               style: buttonTextStyle.copyWith(
-                                  fontSize: 14, fontWeight: FontWeight.w400))),
+                                  fontSize: 16, fontWeight: FontWeight.w400))),
                     ),
                   ),
                 ),
@@ -186,7 +209,7 @@ class _SignupState extends State<Signup> {
                     Text(
                       "Already have an account?",
                       style: GoogleFonts.poppins(
-                        fontSize: 16,
+                        fontSize: 14,
                       ),
                     ),
                     const SizedBox(
@@ -196,27 +219,27 @@ class _SignupState extends State<Signup> {
                       onTap: () => widget.toggleView(),
                       child: Text("Log In",
                           style: GoogleFonts.poppins(
-                              fontSize: 16,
+                              fontSize: 14,
                               fontWeight: FontWeight.w400,
                               color: const Color.fromARGB(255, 31, 119, 190))),
                     ),
                   ],
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Text("- OR -",
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold, fontSize: 20)),
+                        fontWeight: FontWeight.w500, fontSize: 20)),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
                     onTap: () {},
                     child: Container(
-                      padding: const EdgeInsets.all(20),
+                      height: 50,
                       decoration: BoxDecoration(
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(6),
@@ -227,11 +250,13 @@ class _SignupState extends State<Signup> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset("assets/images/google icon.png",
-                              height: 20, width: 20),
+                              height: 40, width: 40),
                           const SizedBox(width: 10),
-                          Text("Log In With Google",
+                          Text("Sign Up With Google",
                               style: GoogleFonts.poppins(
-                                  color: Colors.black, fontSize: 16)),
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400)),
                         ],
                       )),
                     ),

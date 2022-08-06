@@ -30,18 +30,18 @@ class _ProfileState extends State<Profile> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 70),
+              const SizedBox(height: 50),
               Text("Complete your profile",
                   style: emphasizedHeader.copyWith(
-                      fontSize: 32, fontWeight: FontWeight.bold)),
+                      fontSize: 28, fontWeight: FontWeight.w800)),
               const SizedBox(
-                height: 10,
+                height: 5,
               ),
               Text("You're almost there...",
                   style: emphasizedSubheader.copyWith(
-                      fontSize: 16, fontWeight: FontWeight.bold)),
+                      fontSize: 16, fontWeight: FontWeight.w600)),
               const SizedBox(
-                height: 30,
+                height: 50,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -61,7 +61,7 @@ class _ProfileState extends State<Profile> {
                         prefixIcon: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.0),
                             child: Icon(Icons.person_outline_rounded,
-                                size: 22, color: iconColor)),
+                                size: 20, color: iconColor)),
                         border: InputBorder.none,
                         hintText: "First Name",
                       ),
@@ -90,7 +90,7 @@ class _ProfileState extends State<Profile> {
                         prefixIcon: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.0),
                             child: Icon(Icons.person_outline_rounded,
-                                size: 22, color: iconColor)),
+                                size: 20, color: iconColor)),
                         border: InputBorder.none,
                         hintText: "Last Name",
                       ),
@@ -119,7 +119,7 @@ class _ProfileState extends State<Profile> {
                         prefixIcon: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.0),
                             child: Icon(Icons.bookmarks_outlined,
-                                size: 22, color: iconColor)),
+                                size: 20, color: iconColor)),
                         border: InputBorder.none,
                         hintText: "Matric Number",
                       ),
@@ -138,13 +138,13 @@ class _ProfileState extends State<Profile> {
                         prefixIcon: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.0),
                             child: Icon(Icons.house_outlined,
-                                size: 22, color: iconColor)),
+                                size: 20, color: iconColor)),
                         border: OutlineInputBorder(
                             borderSide:
                                 const BorderSide(width: 1, color: borderColor),
-                            borderRadius: BorderRadius.circular(5.0)),
+                            borderRadius: BorderRadius.circular(6)),
                         enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(6),
                             borderSide: const BorderSide(
                                 width: 1, color: borderColor))),
                     items: colleges
@@ -172,13 +172,13 @@ class _ProfileState extends State<Profile> {
                         prefixIcon: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.0),
                             child: Icon(Icons.business_outlined,
-                                size: 22, color: iconColor)),
+                                size: 20, color: iconColor)),
                         border: OutlineInputBorder(
                             borderSide:
                                 const BorderSide(width: 1, color: borderColor),
-                            borderRadius: BorderRadius.circular(5.0)),
+                            borderRadius: BorderRadius.circular(6)),
                         enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(6),
                             borderSide: const BorderSide(
                                 width: 1, color: borderColor))),
                     items: getDepartments(selectedCollege)
@@ -204,13 +204,13 @@ class _ProfileState extends State<Profile> {
                         prefixIcon: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.0),
                             child: Icon(Icons.grade_outlined,
-                                size: 22, color: iconColor)),
+                                size: 20, color: iconColor)),
                         border: OutlineInputBorder(
                             borderSide:
                                 const BorderSide(width: 1, color: borderColor),
-                            borderRadius: BorderRadius.circular(5.0)),
+                            borderRadius: BorderRadius.circular(6)),
                         enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(6),
                             borderSide: const BorderSide(
                                 width: 1, color: borderColor))),
                     items: levels
@@ -226,12 +226,13 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: GestureDetector(
                   onTap: () {
+                    
                     User.getUser().surname = _firstnameController.text.trim();
                     User.getUser().lastname = _lastnameController.text.trim();
                     User.getUser().matricNumber = _matricController.text.trim();

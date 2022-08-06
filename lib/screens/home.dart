@@ -20,9 +20,11 @@ class HomeSlide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 140,
+      height: 220,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(width: 1.0, color: buttonColor)),
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(width: 1, color: buttonColor)),
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -30,11 +32,20 @@ class HomeSlide extends StatelessWidget {
         children: [
           Image.asset(
             imageURL,
-            width: 150,
-            height: 150,
+            width: 130,
+            height: 100,
           ),
-          Text(header, style: emphasizedHeader.copyWith(fontSize: 20)),
-          Text(description, style: emphasizedSubheader.copyWith(fontSize: 14)),
+          Text(header,
+              style: emphasizedHeader.copyWith(
+                  fontSize: 18, fontWeight: FontWeight.w600)),
+          const SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(description,
+                style: emphasizedSubheader.copyWith(fontSize: 14)),
+          ),
         ],
       ),
     );
@@ -52,7 +63,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<HomeSlide> homeSlides = [
     const HomeSlide(
-      imageURL: "assets/images/stamp.png",
+      imageURL: "assets/images/document.png",
       header: "Stamp",
       description: "Get your documents stamped",
     ),
@@ -62,9 +73,9 @@ class _HomeState extends State<Home> {
       description: "Save and upload your documents",
     ),
     const HomeSlide(
-      imageURL: "assets/images/document.png",
+      imageURL: "assets/images/stamp.png",
       header: "Documents",
-      description: "View your uploaded and stamped documents",
+      description: "View uploaded and stamped documents",
     ),
   ];
 
@@ -104,18 +115,23 @@ class _HomeState extends State<Home> {
               IconButton(
                   icon: const Icon(
                     Icons.menu,
-                    color: subtitleColor,
+                    color: Colors.black,
                   ),
                   onPressed: widget.openMenu),
               Text(
                 "Restore",
-                style: headerEmphasisTextStyle,
+                style: emphasizedHeader.copyWith(
+                    fontSize: 22, fontWeight: FontWeight.w800),
               ),
-              CircleAvatar(
-                backgroundImage:
-                    NetworkImage(api + User.getUser().avatarURL + ext),
-                radius: 15.0,
-                backgroundColor: Colors.transparent,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: CircleAvatar(
+                  // backgroundImage:
+                  //     NetworkImage(api + User.getUser().avatarURL + ext),
+                  child: Image.asset("assets/images/welcome.png"),
+                  radius: 18.0,
+                  backgroundColor: Colors.transparent,
+                ),
               ),
             ],
           ),
@@ -124,24 +140,23 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
                       "Welcome, " + User.getUser().lastname,
-                      style: emphasizedHeader,
-                    ),
-                    const SizedBox(
-                      height: 5,
+                      style: emphasizedHeader.copyWith(
+                          fontSize: 20, fontWeight: FontWeight.w800),
                     ),
                     Text(
                       "What would you like to do today?",
-                      style: emphasizedSubheader,
+                      style: emphasizedSubheader.copyWith(
+                          fontSize: 14, fontWeight: FontWeight.w400),
                     ),
                     const SizedBox(
-                      height: 50,
+                      height: 30,
                     ),
                     Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -154,6 +169,7 @@ class _HomeState extends State<Home> {
                               GestureDetector(
                                   onTap: () => _executeOnTap(0),
                                   child: homeSlides[0]),
+                              const SizedBox(width: 10),
                               GestureDetector(
                                   onTap: () => _executeOnTap(1),
                                   child: homeSlides[1]),

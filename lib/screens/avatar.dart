@@ -33,24 +33,30 @@ class _AvatarState extends State<Avatar> {
               child: const Icon(
                 Icons.chevron_left_outlined,
                 size: 30,
-                color: headerColor,
+                color: Colors.black,
               ),
             )),
         backgroundColor: backgroundColor,
         body: SafeArea(
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Choose Avatar", style: headerTextStyle),
                 const SizedBox(
-                  height: 10,
+                  height: 50,
+                ),
+                Text("Choose Avatar",
+                    style: emphasizedHeader.copyWith(
+                        fontSize: 28, fontWeight: FontWeight.w800)),
+                const SizedBox(
+                  height: 5,
                 ),
                 Text("Trust me, this is the last step...",
-                    style: subtitleTextStyle),
+                    style: emphasizedSubheader.copyWith(
+                        fontSize: 16, fontWeight: FontWeight.w600)),
                 const SizedBox(
-                  height: 40,
+                  height: 50,
                 ),
                 Padding(
                     padding: const EdgeInsets.symmetric(
@@ -71,30 +77,22 @@ class _AvatarState extends State<Avatar> {
                                       : _selectedAvatar = _avatarURLS[i]);
                             },
                             child: Stack(children: [
+                              SizedBox(
+                                  child:
+                                      Image.asset("assets/images/welcome.png")),
                               Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Image.network(
-                                      api + _avatarURLS[i] + ext)),
-                              _selectedAvatar == _avatarURLS[i]
-                                  ? const Align(
-                                      alignment: Alignment.topRight,
-                                      child: CircleAvatar(
-                                        radius: 10,
-                                        backgroundColor: buttonColor,
-                                        child: Icon(Icons.done_outline,
-                                            color: backgroundColor),
-                                      ),
-                                    )
-                                  : const Align(
-                                      alignment: Alignment.topRight,
-                                      child: CircleAvatar(
-                                        radius: 10,
-                                        backgroundColor: Colors.transparent,
-                                        child: Icon(Icons.done_outline,
-                                            color: Colors.transparent),
-                                      ),
-                                    )
+                                decoration: BoxDecoration(
+                                    color: _selectedAvatar == _avatarURLS[i]
+                                        ? const Color.fromARGB(20, 0, 0, 0)
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(6)),
+                              ),
+                              Align(
+                                  alignment: Alignment.topRight,
+                                  child: Icon(Icons.done_rounded,
+                                      color: _selectedAvatar == _avatarURLS[i]
+                                          ? buttonColor
+                                          : Colors.transparent))
                             ]),
                           );
                         },
@@ -116,14 +114,16 @@ class _AvatarState extends State<Avatar> {
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text("Please select an avatar")));
+                                content: Center(
+                                    child: Text("Please select an avatar"))));
                       }
                     },
                     child: Container(
-                      padding: const EdgeInsets.all(20),
+                      height: 50,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       decoration: BoxDecoration(
                         color: buttonColor,
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(6),
                       ),
                       child: Center(
                           child: Text("Complete", style: buttonTextStyle)),

@@ -36,7 +36,7 @@ class Settings extends StatelessWidget {
     const DrawerItem(
         name: "Notification", iconData: Icons.notifications_rounded),
     const DrawerItem(
-        name: "Change Password", iconData: Icons.lock_outline_rounded),
+        name: "Support Center", iconData: Icons.lock_outline_rounded),
     const DrawerItem(name: "Log Out", iconData: Icons.logout_rounded)
   ];
 
@@ -60,38 +60,46 @@ class Settings extends StatelessWidget {
                 onPressed: closeMenu,
                 icon: const Icon(Icons.chevron_left_rounded,
                     color: Colors.white)),
-            const SizedBox(height: 5),
-            CircleAvatar(
-              backgroundImage:
-                  NetworkImage(api + User.getUser().avatarURL + ext),
-              radius: 15.0,
-              backgroundColor: Colors.transparent,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: CircleAvatar(
+                child:
+                    //NetworkImage(api + User.getUser().avatarURL + ext),
+                    Image.asset("assets/images/welcome.png"),
+                radius: 25.0,
+                backgroundColor: Colors.transparent,
+              ),
             ),
-            const SizedBox(height: 5),
             Column(
                 children: profileItems
                     .map((item) => ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 2),
-                          leading: Icon(item.iconData, color: Colors.white),
-                          title: Text(item.name,
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 20),
+                          leading: Icon(
+                            item.iconData,
+                            color: Colors.white,
+                          ),
+                          title: Text(item.name, softWrap: true,
                               style: emphasizedSubheader.copyWith(
-                                  color: Colors.white)),
+                                  color: Colors.white, fontSize: 14)),
                         ))
                     .toList()),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
+            Container(color: const Color.fromARGB(250, 75, 75, 75), height: 1),
+            const SizedBox(height: 5),
             Column(
               children: List.generate(
                   actionItems.length,
                   (index) => GestureDetector(
                       onTap: () => _executeOnTap(index),
                       child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 2),
-                        leading: Icon(actionItems[index].iconData, color: Colors.white),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 20),
+                        leading: Icon(actionItems[index].iconData,
+                            color: Colors.white),
                         title: Text(actionItems[index].name,
                             style: emphasizedSubheader.copyWith(
-                                color: Colors.white)),
+                                color: Colors.white, fontSize: 14)),
                         onTap: () => _executeOnTap(index),
                       ))),
             ),

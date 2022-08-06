@@ -13,8 +13,9 @@ class StampCategory extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          "Select the stamp category",
-          style: subtitleTextStyle,
+          "Select Stamp Category",
+          style: emphasizedSubheader.copyWith(
+              fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
       body: SafeArea(
@@ -34,7 +35,7 @@ class StampCategory extends StatelessWidget {
                     height: 80,
                     decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 218, 218, 218),
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(6)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
