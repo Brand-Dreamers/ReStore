@@ -125,7 +125,7 @@ class _SlideContainerState extends State<SlideContainer> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const AuthService()));
+                                              AuthService.getService()));
                                 }
                               });
                             },

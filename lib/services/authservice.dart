@@ -1,5 +1,5 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/components/user.dart';
 import 'package:restore/screens/login.dart';
@@ -8,26 +8,62 @@ import 'package:restore/screens/signup.dart';
 const int success = 200;
 
 class AuthService extends StatefulWidget {
-  const AuthService({Key? key}) : super(key: key);
-  
+  static final AuthService _authservice = AuthService();
+
+  final Dio _dio = Dio(BaseOptions(
+    baseUrl: baseURL,
+    receiveTimeout: 15000,
+    connectTimeout: 15000,
+    sendTimeout: 15000,
+  ));
+  AuthService({Key? key}) : super(key: key);
+
   @override
   State<AuthService> createState() => _AuthServiceState();
-}
 
-Future<User?> getUser(String username, String password) async {
-  try {
-    var url = Uri.parse(baseURL + usersEndpoint + login);
-    Map<String, String> body = {"name": username, "password": password};
-    Response response = await post(url, body: body);
-    if (response.statusCode == success) {
-      return User.fromJson(response.body);
+  static AuthService getService() => _authservice;
+
+  Future<bool> authenticate(
+      Map<String, String> authDetails, String authPath) async {
+    try {
+      Response response = await _dio.post(
+        users + authPath,
+        data: authDetails,
+      );
+      User user = User.fromJson(response.data);
+      user.email = authDetails["email"] as String;
+      user.password = authDetails["password"] as String;
+      User.setUser(user);
+      return true;
+    } catch (e) {
+      return false;
     }
-  } catch (e) {return null;}
-  return null;
+  }
+
+  Future<bool> profile(Map<String, String> authDetails) async {
+    try {
+      Response response = await _dio.put(users, data: authDetails);
+      User user = User.fromJson(response.data);
+      User.setUser(user);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> avatar(String avatarURL) async {
+    try {
+      Response response = await _dio.put(users, data: {"avatarURL": avatarURL});
+      User user = User.fromJson(response.data);
+      User.setUser(user);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }
 
 class _AuthServiceState extends State<AuthService> {
-  
   bool showSignUp = false;
 
   void toggleView() => setState(() => showSignUp = !showSignUp);
@@ -35,9 +71,13 @@ class _AuthServiceState extends State<AuthService> {
   @override
   Widget build(BuildContext context) {
     if (showSignUp) {
-      return Signup(toggleView: toggleView,);
+      return Signup(
+        toggleView: toggleView,
+      );
     } else {
-      return Login(toggleView: toggleView,);
+      return Login(
+        toggleView: toggleView,
+      );
     }
   }
 }

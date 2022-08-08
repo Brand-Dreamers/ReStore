@@ -13,7 +13,7 @@ class PDFData {
 Future<PDFData> loadPDF() async {
   FilePickerResult? result =
       await FilePicker.platform.pickFiles(allowedExtensions: [
-    'pdf',
+    'pdf', 'png', 'jpg', 'jpeg'
   ], type: FileType.custom);
   if (result != null) {
     var res = result.files.single;

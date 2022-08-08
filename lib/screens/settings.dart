@@ -5,25 +5,25 @@ import 'package:restore/components/user.dart';
 class Settings extends StatelessWidget {
   final List<DrawerItem> profileItems = [
     DrawerItem(
-      name: User.getUser().surname + " " + User.getUser().lastname,
+      name: User.getUser()!.surname + " " + User.getUser()!.lastname,
       iconData: Icons.person_outline_rounded,
     ),
     DrawerItem(
-        name: User.getUser().matricNumber, iconData: Icons.bookmarks_outlined),
+        name: User.getUser()!.matricNumber, iconData: Icons.bookmarks_outlined),
     DrawerItem(
-      name: User.getUser().college,
+      name: User.getUser()!.college,
       iconData: Icons.house_outlined,
     ),
     DrawerItem(
-      name: User.getUser().department,
+      name: User.getUser()!.department,
       iconData: Icons.business_outlined,
     ),
     DrawerItem(
-      name: User.getUser().level,
+      name: User.getUser()!.level,
       iconData: Icons.grade_outlined,
     ),
     DrawerItem(
-      name: User.getUser().email,
+      name: User.getUser()!.email,
       iconData: Icons.mail_outline_rounded,
     )
   ];
@@ -79,7 +79,8 @@ class Settings extends StatelessWidget {
                             item.iconData,
                             color: Colors.white,
                           ),
-                          title: Text(item.name, softWrap: true,
+                          title: Text(item.name,
+                              softWrap: true,
                               style: emphasizedSubheader.copyWith(
                                   color: Colors.white, fontSize: 14)),
                         ))

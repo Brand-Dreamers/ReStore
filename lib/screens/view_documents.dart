@@ -80,7 +80,7 @@ class _ViewDocumentsState extends State<ViewDocuments> {
               future: getDocuments(currentFilter),
               builder: ((context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Wait();
+                  return const Popup();
                 } else if (snapshot.connectionState == ConnectionState.done) {
                   return Text("Error", style: emphasizedHeader.copyWith(fontSize: 16));
                 } else {

@@ -146,7 +146,7 @@ class _HomeState extends State<Home> {
                       height: 20,
                     ),
                     Text(
-                      "Welcome, " + User.getUser().lastname,
+                      "Welcome, " + User.getUser()!.lastname,
                       style: emphasizedHeader.copyWith(
                           fontSize: 20, fontWeight: FontWeight.w800),
                     ),

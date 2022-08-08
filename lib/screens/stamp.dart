@@ -4,7 +4,6 @@ import 'package:restore/components/pdf_handler.dart';
 import 'package:restore/components/constants.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
-import 'dart:io';
 
 class Stamp extends StatefulWidget {
   const Stamp({Key? key}) : super(key: key);
@@ -64,7 +63,7 @@ class _StampState extends State<Stamp> {
             future: futureData,
             builder: ((context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Wait();
+                return const Popup();
               } else if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
                   PDFData pdf = snapshot.data as PDFData;

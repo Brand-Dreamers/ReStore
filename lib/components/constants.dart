@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 
-const String baseURL = "https://restore-be.herokuapp.com";
-const String usersEndpoint = "/users";
-const String documentsEndpoint = "/documents";
-const String profileEndpoint = "/profile";
-const String login = "/signin";
-const String register = "/signup";
+const String baseURL = "https://restore-be.herokuapp.com/";
+const String users = "users";
+const String documentsEndpoint = "documents";
+const String profileEndpoint = "profile";
+const String login = "signin";
+const String register = "signup";
 
 const backgroundColor = Color.fromARGB(255, 250, 255, 250);
 const fieldColor = Color.fromARGB(255, 240, 240, 240);
@@ -19,7 +19,7 @@ TextStyle emphasizedHeader = GoogleFonts.poppins(
     fontWeight: FontWeight.w500, fontSize: 28, color: Colors.black);
 
 TextStyle emphasizedSubheader = GoogleFonts.poppins(
-    fontWeight: FontWeight.w300, fontSize: 14, color: Colors.grey);
+    fontWeight: FontWeight.w300, fontSize: 14, color: Colors.black);
 
 TextStyle buttonTextStyle = GoogleFonts.poppins()
     .copyWith(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white);
@@ -189,15 +189,24 @@ List<Slide> startSlides = [
   ),
 ];
 
-class Wait extends StatelessWidget {
+class Popup extends StatelessWidget {
   final String message;
-  const Wait({Key? key, this.message = "Please Wait"}) : super(key: key);
+  final Widget icon;
+  final width;
+  final height;
+  const Popup(
+      {Key? key,
+      this.message = "Please Wait",
+      this.icon = const CircularProgressIndicator(color: buttonColor),
+      this.width = 150,
+      this.height = 120})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
-      width: 150,
+      height: height,
+      width: width,
       decoration: BoxDecoration(
         color: Colors.blueGrey,
         borderRadius: BorderRadius.circular(5.0),
@@ -206,9 +215,7 @@ class Wait extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(
-            color: buttonColor,
-          ),
+          icon,
           const SizedBox(
             height: 20,
           ),
@@ -218,18 +225,6 @@ class Wait extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class BlankScreen extends StatelessWidget {
-  const BlankScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: backgroundColor,
-      body: Center(child: Wait()),
     );
   }
 }
@@ -237,37 +232,27 @@ class BlankScreen extends StatelessWidget {
 class NotificationContainer extends StatelessWidget {
   final String message;
   final String imageURL;
-
   const NotificationContainer(
       {Key? key, required this.message, required this.imageURL})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          Image.asset(
-            imageURL,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            message,
-            style: emphasizedSubheader.copyWith(fontSize: 16),
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Image.asset(imageURL),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(message),
+      ],
     );
   }
 }
+
+
 
 /**
  * Stack(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:restore/components/user.dart';
 import 'package:restore/screens/avatar.dart';
+import 'package:restore/services/authservice.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -12,13 +12,32 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String? selectedCollege;
-  String? selectedLevel;
-  String? selectedDepartment;
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  final Map<String, String> _authDetails = {
+    "firstName": "",
+    "lastName": "",
+    "level": "",
+    "college": "",
+    "department": "",
+    "matricNumber": "",
+    "telephone": "",
+  };
 
-  final TextEditingController _firstnameController = TextEditingController();
-  final TextEditingController _lastnameController = TextEditingController();
-  final TextEditingController _matricController = TextEditingController();
+  String? selectedCollege;
+
+  Future _submit() async {
+    FormState? currentState = _formKey.currentState;
+    if (currentState != null) {
+      if (!currentState.validate()) return;
+
+      currentState.save();
+      bool success = await AuthService.getService().profile(_authDetails);
+      if (success) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const Avatar()));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,186 +62,268 @@ class _ProfileState extends State<Profile> {
               const SizedBox(
                 height: 50,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: fieldColor,
-                    border: Border.all(
-                      color: borderColor,
-                    ),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: TextField(
-                      controller: _firstnameController,
-                      decoration: const InputDecoration(
-                        prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Icon(Icons.person_outline_rounded,
-                                size: 20, color: iconColor)),
-                        border: InputBorder.none,
-                        hintText: "First Name",
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: fieldColor,
+                          border: Border.all(
+                            color: borderColor,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              prefixIcon: Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Icon(Icons.person_outline_rounded,
+                                      size: 20, color: iconColor)),
+                              border: InputBorder.none,
+                              hintText: "First Name",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please input a name";
+                              }
+                              return null;
+                            },
+                            onSaved: (value) =>
+                                _authDetails["firstName"] = value!,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: fieldColor,
-                    border: Border.all(
-                      color: borderColor,
+                    const SizedBox(
+                      height: 10,
                     ),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: TextField(
-                      controller: _lastnameController,
-                      decoration: const InputDecoration(
-                        prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Icon(Icons.person_outline_rounded,
-                                size: 20, color: iconColor)),
-                        border: InputBorder.none,
-                        hintText: "Last Name",
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: fieldColor,
+                          border: Border.all(
+                            color: borderColor,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              prefixIcon: Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Icon(Icons.person_outline_rounded,
+                                      size: 20, color: iconColor)),
+                              border: InputBorder.none,
+                              hintText: "Last Name",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please input a name";
+                              }
+                              return null;
+                            },
+                            onSaved: (value) =>
+                                _authDetails["lastName"] = value!,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: fieldColor,
-                    border: Border.all(
-                      color: borderColor,
+                    const SizedBox(
+                      height: 10,
                     ),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: TextField(
-                      controller: _matricController,
-                      decoration: const InputDecoration(
-                        prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Icon(Icons.bookmarks_outlined,
-                                size: 20, color: iconColor)),
-                        border: InputBorder.none,
-                        hintText: "Matric Number",
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: fieldColor,
+                          border: Border.all(
+                            color: borderColor,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              prefixIcon: Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Icon(Icons.bookmarks_outlined,
+                                      size: 20, color: iconColor)),
+                              border: InputBorder.none,
+                              hintText: "Matric Number",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please input a number";
+                              }
+                              return null;
+                            },
+                            onSaved: (value) =>
+                                _authDetails["matricNumber"] = value!,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                child: SizedBox(
-                  height: 60,
-                  child: DropdownButtonFormField<String>(
-                    hint: const Text("Choose College"),
-                    value: selectedCollege,
-                    decoration: InputDecoration(
-                        prefixIcon: const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Icon(Icons.house_outlined,
-                                size: 20, color: iconColor)),
-                        border: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(width: 1, color: borderColor),
-                            borderRadius: BorderRadius.circular(6)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(6),
-                            borderSide: const BorderSide(
-                                width: 1, color: borderColor))),
-                    items: colleges
-                        .map((item) => DropdownMenuItem<String>(
-                              child: Text(item, style: GoogleFonts.poppins()),
-                              value: item,
-                            ))
-                        .toList(),
-                    dropdownColor: backgroundColor,
-                    onChanged: (item) => setState(() {
-                      selectedCollege = item ?? "";
-                      selectedDepartment = null;
-                    }),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                child: SizedBox(
-                  height: 60,
-                  child: DropdownButtonFormField<String>(
-                    hint: const Text("Choose Department"),
-                    value: selectedDepartment,
-                    decoration: InputDecoration(
-                        prefixIcon: const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Icon(Icons.business_outlined,
-                                size: 20, color: iconColor)),
-                        border: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(width: 1, color: borderColor),
-                            borderRadius: BorderRadius.circular(6)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(6),
-                            borderSide: const BorderSide(
-                                width: 1, color: borderColor))),
-                    items: getDepartments(selectedCollege)
-                        .map((item) => DropdownMenuItem<String>(
-                              child: Text(item, style: GoogleFonts.poppins()),
-                              value: item,
-                            ))
-                        .toList(),
-                    dropdownColor: backgroundColor,
-                    onChanged: (item) =>
-                        setState(() => selectedDepartment = item ?? ""),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                child: SizedBox(
-                  height: 60,
-                  child: DropdownButtonFormField<String>(
-                    hint: const Text("Choose Level"),
-                    value: selectedLevel,
-                    decoration: InputDecoration(
-                        prefixIcon: const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Icon(Icons.grade_outlined,
-                                size: 20, color: iconColor)),
-                        border: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(width: 1, color: borderColor),
-                            borderRadius: BorderRadius.circular(6)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(6),
-                            borderSide: const BorderSide(
-                                width: 1, color: borderColor))),
-                    items: levels
-                        .map((item) => DropdownMenuItem<String>(
-                              child: Text(item, style: GoogleFonts.poppins()),
-                              value: item,
-                            ))
-                        .toList(),
-                    dropdownColor: backgroundColor,
-                    onChanged: (item) =>
-                        setState(() => selectedLevel = item ?? ""),
-                  ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: fieldColor,
+                          border: Border.all(
+                            color: borderColor,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              prefixIcon: Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Icon(Icons.phone_rounded,
+                                      size: 20, color: iconColor)),
+                              border: InputBorder.none,
+                              hintText: "Telephone",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please input a number";
+                              }
+                              return null;
+                            },
+                            onSaved: (value) =>
+                                _authDetails["telephone"] = value!,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 10),
+                      child: SizedBox(
+                        height: 60,
+                        child: DropdownButtonFormField<String>(
+                          key: _formKey,
+                          hint: const Text("Choose College"),
+                          value: selectedCollege,
+                          decoration: InputDecoration(
+                              prefixIcon: const Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Icon(Icons.house_outlined,
+                                      size: 20, color: iconColor)),
+                              border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      width: 1, color: borderColor),
+                                  borderRadius: BorderRadius.circular(6)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                  borderSide: const BorderSide(
+                                      width: 1, color: borderColor))),
+                          items: colleges
+                              .map((item) => DropdownMenuItem<String>(
+                                    child: Text(item,
+                                        style: GoogleFonts.poppins()),
+                                    value: item,
+                                  ))
+                              .toList(),
+                          dropdownColor: backgroundColor,
+                          onChanged: (item) {
+                            setState(() => selectedCollege = item ?? "");
+                            _authDetails["college"] = item ?? "";
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 10),
+                      child: SizedBox(
+                        height: 60,
+                        child: DropdownButtonFormField<String>(
+                          key: _formKey,
+                          hint: const Text("Choose Department"),
+                          value: "",
+                          decoration: InputDecoration(
+                              prefixIcon: const Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Icon(Icons.business_outlined,
+                                      size: 20, color: iconColor)),
+                              border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      width: 1, color: borderColor),
+                                  borderRadius: BorderRadius.circular(6)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                  borderSide: const BorderSide(
+                                      width: 1, color: borderColor))),
+                          items: getDepartments(selectedCollege)
+                              .map((item) => DropdownMenuItem<String>(
+                                    child: Text(item,
+                                        style: GoogleFonts.poppins()),
+                                    value: item,
+                                  ))
+                              .toList(),
+                          dropdownColor: backgroundColor,
+                          onChanged: (item) =>
+                              _authDetails["department"] = item ?? "",
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 10),
+                      child: SizedBox(
+                        height: 60,
+                        child: DropdownButtonFormField<String>(
+                          key: _formKey,
+                          hint: const Text("Choose Level"),
+                          value: "",
+                          decoration: InputDecoration(
+                              prefixIcon: const Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Icon(Icons.grade_outlined,
+                                      size: 20, color: iconColor)),
+                              border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      width: 1, color: borderColor),
+                                  borderRadius: BorderRadius.circular(6)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                  borderSide: const BorderSide(
+                                      width: 1, color: borderColor))),
+                          items: levels
+                              .map((item) => DropdownMenuItem<String>(
+                                    child: Text(item,
+                                        style: GoogleFonts.poppins()),
+                                    value: item,
+                                  ))
+                              .toList(),
+                          dropdownColor: backgroundColor,
+                          onChanged: (item) =>
+                              _authDetails["level"] = item ?? "",
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(
@@ -231,19 +332,7 @@ class _ProfileState extends State<Profile> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: GestureDetector(
-                  onTap: () {
-                    
-                    User.getUser().surname = _firstnameController.text.trim();
-                    User.getUser().lastname = _lastnameController.text.trim();
-                    User.getUser().matricNumber = _matricController.text.trim();
-                    User.getUser().college = selectedCollege as String;
-                    User.getUser().department = selectedDepartment as String;
-                    User.getUser().level = selectedLevel as String;
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Avatar()));
-                  },
+                  onTap: () => _submit(),
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(

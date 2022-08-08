@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
-import 'package:restore/components/user.dart';
 import 'package:restore/screens/landing_page.dart';
+import 'package:restore/services/authservice.dart';
 
 class Avatar extends StatefulWidget {
   const Avatar({Key? key}) : super(key: key);
@@ -104,13 +104,16 @@ class _AvatarState extends State<Avatar> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       if (_selectedAvatar != "") {
-                        User.getUser().avatarURL = _selectedAvatar;
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LandingPage()));
+                        bool success = await AuthService.getService()
+                            .avatar(_selectedAvatar);
+                        if (success) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LandingPage()));
+                        }
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

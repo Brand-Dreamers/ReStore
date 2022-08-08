@@ -1,9 +1,11 @@
 name: restore
-description: A new Flutter project.
+description: A new project
+
+publish_to: 'none'
 
 version: 1.0.0+1
 
-environment:
+environment: 
   sdk: ">=2.16.0 <3.0.0"
 
 dependencies:
@@ -14,29 +16,22 @@ dependencies:
   google_fonts: ^3.0.1
   shared_preferences: ^2.0.15
   animated_splash_screen: ^1.2.0
-  font_awesome_flutter: ^10.1.0
-  http: ^0.13.4
   file_picker: ^4.6.1
   provider: ^6.0.3
-  path_provider: ^2.0.11
   pdf: ^3.8.1
   pdfx: ^2.0.1+2
   dio: ^4.0.6
   badges: ^2.0.3
   json_annotation: ^4.0.1
 
-  
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^1.0.0
-  
+
   build_runner: ^2.0.4
   json_serializable: ^4.1.3
-
 
 flutter:
   uses-material-design: true

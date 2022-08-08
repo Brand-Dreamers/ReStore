@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:restore/components/constants.dart';
-import 'package:restore/components/user.dart';
 import 'package:restore/screens/landing_page.dart';
+import 'package:restore/services/authservice.dart';
 
 class Login extends StatefulWidget {
   final Function toggleView;
@@ -17,14 +17,23 @@ Future<bool> willPop() async {
 }
 
 class _LoginState extends State<Login> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  late bool _showPassword;
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  final Map<String, String> _authDetails = {"email": "", "password": ""};
+  bool _showPassword = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _showPassword = false;
+  Future _submit() async {
+    FormState? currentState = _formKey.currentState;
+    if (currentState != null) {
+      if (!currentState.validate()) return;
+
+      currentState.save();
+      bool success =
+          await AuthService.getService().authenticate(_authDetails, "/signin");
+      if (success) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const LandingPage()));
+      }
+    }
   }
 
   @override
@@ -64,61 +73,92 @@ class _LoginState extends State<Login> {
                           color: buttonColor)),
                 ),
                 const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: fieldColor,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0),
-                      child: TextField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          prefixIcon: const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(Icons.mail_outline_rounded,
-                                  size: 20, color: iconColor)),
-                          border: InputBorder.none,
-                          hintText: "Email",
-                          hintStyle: GoogleFonts.poppins(color: Colors.grey),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: fieldColor,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                prefixIcon: const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 2.0),
+                                    child: Icon(Icons.mail_outline_rounded,
+                                        size: 20, color: iconColor)),
+                                border: InputBorder.none,
+                                hintText: "Email",
+                                hintStyle:
+                                    GoogleFonts.poppins(color: Colors.grey),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty || !value.contains("@")) {
+                                  return "Invalid Email Address";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) =>
+                                  _authDetails["email"] = value!,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: fieldColor,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0),
-                      child: TextField(
-                        controller: _passwordController,
-                        obscureText: !_showPassword,
-                        decoration: InputDecoration(
-                            prefixIcon: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 2.0),
-                                child: Icon(Icons.lock_outline_rounded,
-                                    size: 20, color: iconColor)),
-                            border: InputBorder.none,
-                            hintText: "Password",
-                            hintStyle: GoogleFonts.poppins(color: Colors.grey),
-                            suffixIcon: GestureDetector(
-                                child: Icon(_showPassword ? Icons.visibility_off : Icons.visibility,
-                                        color: Colors.grey),
-                                onTap: () {
-                                  setState(() => _showPassword = !_showPassword);
-                                })),
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: fieldColor,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: TextFormField(
+                              obscureText: !_showPassword,
+                              decoration: InputDecoration(
+                                  prefixIcon: const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 2.0),
+                                      child: Icon(Icons.lock_outline_rounded,
+                                          size: 20, color: iconColor)),
+                                  border: InputBorder.none,
+                                  hintText: "Password",
+                                  hintStyle:
+                                      GoogleFonts.poppins(color: Colors.grey),
+                                  suffixIcon: GestureDetector(
+                                      child: Icon(
+                                          _showPassword
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                          color: Colors.grey),
+                                      onTap: () {
+                                        setState(() =>
+                                            _showPassword = !_showPassword);
+                                      })),
+                              validator: (value) {
+                                if (value!.isEmpty || value.length < 6) {
+                                  return "Password is too short. Use atleast 6 characters";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) =>
+                                  _authDetails["password"] = value!,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(
@@ -128,14 +168,7 @@ class _LoginState extends State<Login> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
                     onTap: () {
-                      String password = _passwordController.text.trim();
-                      String email = _emailController.text.trim();
-                      User.getUser().email = email;
-                      User.getUser().password = password;
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LandingPage()));
+                      _submit();
                     },
                     child: Container(
                       height: 50,
@@ -157,10 +190,10 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("Forgot Password?, ",
-                        style: GoogleFonts.poppins(fontSize: 14)),
+                        style: GoogleFonts.poppins(fontSize: 12)),
                     Text("Click Here",
                         style: GoogleFonts.poppins(
-                            fontSize: 14,
+                            fontSize: 12,
                             color: const Color.fromARGB(255, 180, 21, 10))),
                   ],
                 ),
@@ -193,8 +226,7 @@ class _LoginState extends State<Login> {
                           const SizedBox(width: 10),
                           Text("Log In With Google",
                               style: GoogleFonts.poppins(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500)),
+                                  fontSize: 16, fontWeight: FontWeight.w500)),
                         ],
                       )),
                     ),
