@@ -63,17 +63,17 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<HomeSlide> homeSlides = [
     const HomeSlide(
-      imageURL: "assets/images/document.png",
+      imageURL: "images/document.png",
       header: "Stamp",
       description: "Get your documents stamped",
     ),
     const HomeSlide(
-      imageURL: "assets/images/upload.png",
+      imageURL: "images/upload.png",
       header: "Upload",
       description: "Save and upload your documents",
     ),
     const HomeSlide(
-      imageURL: "assets/images/stamp.png",
+      imageURL: "images/stamp.png",
       header: "Documents",
       description: "View uploaded and stamped documents",
     ),
@@ -128,7 +128,7 @@ class _HomeState extends State<Home> {
                 child: CircleAvatar(
                   // backgroundImage:
                   //     NetworkImage(api + User.getUser().avatarURL + ext),
-                  child: Image.asset("assets/images/welcome.png"),
+                  child: Image.asset("images/welcome.png"),
                   radius: 18.0,
                   backgroundColor: Colors.transparent,
                 ),

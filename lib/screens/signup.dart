@@ -55,7 +55,7 @@ class _SignupState extends State<Signup> {
                 ),
                 Text("Sign Up",
                     style: emphasizedHeader.copyWith(
-                        fontSize: 28, fontWeight: FontWeight.w800)),
+                        fontSize: 32, fontWeight: FontWeight.w600)),
                 const SizedBox(
                   height: 5,
                 ),
@@ -259,7 +259,7 @@ class _SignupState extends State<Signup> {
                 const SizedBox(
                   height: 20,
                 ),
-                Text("- OR -",
+                Text("-  OR  -",
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500, fontSize: 20)),
                 const SizedBox(
@@ -283,7 +283,7 @@ class _SignupState extends State<Signup> {
                           Image.asset("assets/images/google icon.png",
                               height: 40, width: 40),
                           const SizedBox(width: 10),
-                          Text("Sign Up With Google",
+                          Text("sign up with Google",
                               style: GoogleFonts.poppins(
                                   color: Colors.black,
                                   fontSize: 16,

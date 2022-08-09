@@ -53,7 +53,7 @@ class _LoginState extends State<Login> {
                 ),
                 Text("Log In",
                     style: emphasizedHeader.copyWith(
-                        fontSize: 28, fontWeight: FontWeight.w800)),
+                        fontSize: 32, fontWeight: FontWeight.w600)),
                 const SizedBox(
                   height: 5,
                 ),
@@ -200,7 +200,7 @@ class _LoginState extends State<Login> {
                 const SizedBox(
                   height: 20,
                 ),
-                Text("- OR -",
+                Text("-  OR  -",
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500, fontSize: 20)),
                 const SizedBox(
@@ -224,7 +224,7 @@ class _LoginState extends State<Login> {
                           Image.asset("assets/images/google icon.png",
                               height: 40, width: 40),
                           const SizedBox(width: 10),
-                          Text("Log In With Google",
+                          Text("log in with Google",
                               style: GoogleFonts.poppins(
                                   fontSize: 16, fontWeight: FontWeight.w500)),
                         ],
@@ -242,7 +242,7 @@ class _LoginState extends State<Login> {
                     Text(
                       "Don't have an account?",
                       style: GoogleFonts.poppins(
-                        fontSize: 14,
+                        fontSize: 12,
                       ),
                     ),
                     const SizedBox(
@@ -252,7 +252,7 @@ class _LoginState extends State<Login> {
                       onTap: () => widget.toggleView(),
                       child: Text("Sign Up",
                           style: GoogleFonts.poppins(
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: const Color.fromARGB(255, 31, 119, 190))),
                     ),

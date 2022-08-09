@@ -10,7 +10,7 @@ const String login = "signin";
 const String register = "signup";
 
 const backgroundColor = Color.fromARGB(255, 250, 255, 250);
-const fieldColor = Color.fromARGB(255, 240, 240, 240);
+const fieldColor = Color.fromARGB(220, 200, 200, 200);
 const buttonColor = Color.fromARGB(255, 0, 158, 96);
 const iconColor = Colors.black45;
 const borderColor = Colors.black12;
@@ -172,20 +172,20 @@ List<Slide> startSlides = [
     topHeaderText: "Easy",
     bottomHeaderText: "Document Stamping",
     description: "With Restore, you can stamp your documents online with ease",
-    slideImageURL: "assets/images/start 1.png",
+    slideImageURL: "images/start 1.png",
   ),
   const Slide(
     topHeaderText: "Save",
     bottomHeaderText: "Your Time",
     description:
         "Manage your time by saving yourself the stress of manual stamping",
-    slideImageURL: "assets/images/start 2.png",
+    slideImageURL: "images/start 2.png",
   ),
   const Slide(
     topHeaderText: "Upload",
     bottomHeaderText: "Your Documents",
     description: "Save and upload your documents for later use",
-    slideImageURL: "assets/images/start 3.png",
+    slideImageURL: "images/start 3.png",
   ),
 ];
 

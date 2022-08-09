@@ -36,7 +36,7 @@ class _StampState extends State<Stamp> {
           return StampPanel(
             data: pdfData,
             onStamp: () async {
-              String stampPath = "assets/images/dummy stamp.png";
+              String stampPath = "images/dummy stamp.png";
               ByteData bytes = await rootBundle.load(stampPath);
               Uint8List stampData = bytes.buffer
                   .asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
@@ -70,7 +70,7 @@ class _StampState extends State<Stamp> {
                   if (pdf.data.isEmpty) {
                     return const NotificationContainer(
                         message: "No file was selected!",
-                        imageURL: "assets/images/error.png");
+                        imageURL: "images/error.png");
                   } else {
                     return Stack(children: [
                       PdfView(controller: _controller),
@@ -78,9 +78,9 @@ class _StampState extends State<Stamp> {
                         left: dragData.xOffset,
                         top: dragData.yOffset,
                         child: Draggable<DragData>(
-                          child: Image.asset("assets/images/dummy stamp.png",
+                          child: Image.asset("images/dummy stamp.png",
                               height: stampImageSize, width: stampImageSize),
-                          feedback: Image.asset("assets/images/dummy stamp.png",
+                          feedback: Image.asset("images/dummy stamp.png",
                               height: stampImageSize, width: stampImageSize),
                           childWhenDragging: const SizedBox(
                               height: stampImageSize, width: stampImageSize),
@@ -116,12 +116,12 @@ class _StampState extends State<Stamp> {
                 } else {
                   return const NotificationContainer(
                       message: "Something went wrong... Please try again!",
-                      imageURL: "assets/images/fatal error.png");
+                      imageURL: "images/fatal error.png");
                 }
               } else {
                 return const NotificationContainer(
                     message: "An error occurred while loading the PDF",
-                    imageURL: "assets/images/fatal error.png");
+                    imageURL: "images/fatal error.png");
               }
             })),
       ),

@@ -86,7 +86,7 @@ class _ViewDocumentsState extends State<ViewDocuments> {
                 } else {
                   return const NotificationContainer(
                       message: "An error occured",
-                      imageURL: "assets/images/fatal error.png");
+                      imageURL: "images/fatal error.png");
                 }
               })),
         )));

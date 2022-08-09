@@ -65,7 +65,7 @@ class Settings extends StatelessWidget {
               child: CircleAvatar(
                 child:
                     //NetworkImage(api + User.getUser().avatarURL + ext),
-                    Image.asset("assets/images/welcome.png"),
+                    Image.asset("images/welcome.png"),
                 radius: 25.0,
                 backgroundColor: Colors.transparent,
               ),

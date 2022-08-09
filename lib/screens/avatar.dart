@@ -79,7 +79,7 @@ class _AvatarState extends State<Avatar> {
                             child: Stack(children: [
                               SizedBox(
                                   child:
-                                      Image.asset("assets/images/welcome.png")),
+                                      Image.asset("images/welcome.png")),
                               Container(
                                 decoration: BoxDecoration(
                                     color: _selectedAvatar == _avatarURLS[i]
