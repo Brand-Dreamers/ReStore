@@ -139,8 +139,8 @@ class _LoginState extends State<Login> {
                                   suffixIcon: GestureDetector(
                                       child: Icon(
                                           _showPassword
-                                              ? Icons.visibility_off
-                                              : Icons.visibility,
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
                                           color: Colors.grey),
                                       onTap: () {
                                         setState(() =>
@@ -148,7 +148,7 @@ class _LoginState extends State<Login> {
                                       })),
                               validator: (value) {
                                 if (value!.isEmpty || value.length < 6) {
-                                  return "Password is too short. Use atleast 6 characters";
+                                  return "Password is too short. Use at least 6 characters";
                                 }
                                 return null;
                               },
@@ -221,7 +221,7 @@ class _LoginState extends State<Login> {
                           child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset("assets/images/google icon.png",
+                          Image.asset("images/google icon.png",
                               height: 40, width: 40),
                           const SizedBox(width: 10),
                           Text("log in with Google",

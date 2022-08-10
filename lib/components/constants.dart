@@ -10,7 +10,7 @@ const String login = "signin";
 const String register = "signup";
 
 const backgroundColor = Color.fromARGB(255, 250, 255, 250);
-const fieldColor = Color.fromARGB(220, 200, 200, 200);
+const fieldColor = Color.fromARGB(50, 200, 200, 200);
 const buttonColor = Color.fromARGB(255, 0, 158, 96);
 const iconColor = Colors.black45;
 const borderColor = Colors.black12;

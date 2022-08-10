@@ -30,12 +30,16 @@ class AuthService extends StatefulWidget {
         users + authPath,
         data: authDetails,
       );
-      User user = User.fromJson(response.data);
-      user.email = authDetails["email"] as String;
-      user.password = authDetails["password"] as String;
-      User.setUser(user);
-      return true;
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        User user = User.fromJson(response.data);
+        user.email = authDetails["email"] as String;
+        user.password = authDetails["password"] as String;
+        User.setUser(user);
+        return true;
+      }
+      return false;
     } catch (e) {
+      print("Here" + e.toString());
       return false;
     }
   }
