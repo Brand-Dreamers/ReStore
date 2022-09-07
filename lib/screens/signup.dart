@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:restore/screens/profile.dart';
+import 'package:restore/screens/home.dart';
 import 'package:restore/services/authservice.dart';
 
 class Signup extends StatefulWidget {
@@ -23,23 +23,29 @@ class _SignupState extends State<Signup> {
   bool _showPassword = false;
   bool _showConfirmPassword = false;
 
-  Future _submit() async {
-    FormState? currentState = _formKey.currentState;
-    if (currentState != null) {
-      if (!currentState.validate()) return;
-
-      currentState.save();
-      bool success =
-          await AuthService.getService().authenticate(_authDetails, "/signup");
-      if (success) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const Profile()));
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    void changeScreen() => Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const Home()));
+
+    Future<bool> _submit() async {
+      FormState? currentState = _formKey.currentState;
+      if (currentState != null) {
+        if (!currentState.validate()) return false;
+
+        currentState.save();
+
+        String success = await AuthService.getService()
+            .authenticate(_authDetails, "/signup");
+        if (success == "SUCCESS") {
+          changeScreen();
+        } else {
+          // Show the error message
+        }
+      }
+      return false;
+    }
+
     return WillPopScope(
       onWillPop: willPop,
       child: Scaffold(
@@ -65,16 +71,6 @@ class _SignupState extends State<Signup> {
                 const SizedBox(
                   height: 50,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                      "Register with your registered school mail e.g you@school.edu.ng",
-                      style: emphasizedSubheader.copyWith(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w400,
-                          color: buttonColor)),
-                ),
-                const SizedBox(height: 10),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -150,8 +146,8 @@ class _SignupState extends State<Signup> {
                                               _showPassword = !_showPassword);
                                         })),
                                 validator: (value) {
-                                  if (value!.isEmpty || value.length < 6) {
-                                    return "Password is too short. Use at least 6 characters";
+                                  if (value!.isEmpty) { // || value.length < 6
+                                    return "Password is too short. Use at least 1 characters";
                                   }
                                   return null;
                                 },
@@ -216,7 +212,13 @@ class _SignupState extends State<Signup> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
-                    onTap: () => _submit(),
+                    onTap: () {
+                      showDialog(
+                          useSafeArea: true,
+                          context: context,
+                          builder: (context) => const Popup());
+                      _submit();
+                    },
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
@@ -231,7 +233,7 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
                 const SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -240,7 +242,7 @@ class _SignupState extends State<Signup> {
                     Text(
                       "Already have an account?",
                       style: GoogleFonts.poppins(
-                        fontSize: 12,
+                        fontSize: 13,
                       ),
                     ),
                     const SizedBox(
@@ -250,48 +252,11 @@ class _SignupState extends State<Signup> {
                       onTap: () => widget.toggleView(),
                       child: Text("Log In",
                           style: GoogleFonts.poppins(
-                              fontSize: 12,
+                              fontSize: 13,
                               fontWeight: FontWeight.w400,
                               color: const Color.fromARGB(255, 31, 119, 190))),
                     ),
                   ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text("-  OR  -",
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500, fontSize: 20)),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(color: borderColor),
-                      ),
-                      child: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset("images/google icon.png",
-                              height: 40, width: 40),
-                          const SizedBox(width: 10),
-                          Text("sign up with Google",
-                              style: GoogleFonts.poppins(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400)),
-                        ],
-                      )),
-                    ),
-                  ),
                 ),
               ],
             ),

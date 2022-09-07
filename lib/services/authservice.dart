@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
@@ -5,16 +7,14 @@ import 'package:restore/components/user.dart';
 import 'package:restore/screens/login.dart';
 import 'package:restore/screens/signup.dart';
 
-const int success = 200;
-
 class AuthService extends StatefulWidget {
   static final AuthService _authservice = AuthService();
 
   final Dio _dio = Dio(BaseOptions(
     baseUrl: baseURL,
-    receiveTimeout: 15000,
-    connectTimeout: 15000,
-    sendTimeout: 15000,
+    receiveTimeout: 7000,
+    connectTimeout: 7000,
+    sendTimeout: 7000,
   ));
   AuthService({Key? key}) : super(key: key);
 
@@ -23,54 +23,79 @@ class AuthService extends StatefulWidget {
 
   static AuthService getService() => _authservice;
 
-  Future<bool> authenticate(
+  Future<String> authenticate(
       Map<String, String> authDetails, String authPath) async {
+    String error = "";
     try {
       Response response = await _dio.post(
-        users + authPath,
+        "$users$authPath",
         data: authDetails,
       );
+
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        User user = User.fromJson(response.data);
-        user.email = authDetails["email"] as String;
-        user.password = authDetails["password"] as String;
+        User user = User();
+
+        user.email = response.data["user"]["email"];
+        user.admin = response.data["user"]["admin"];
+        user.token = response.data["token"];
+
         User.setUser(user);
-        return true;
+        return "SUCCESS";
+      } else {
+        error = response.data["error"] as String;
       }
-      return false;
-    } catch (e) {
-      print("Here" + e.toString());
-      return false;
-    }
+    } catch (e) {}
+
+    return error;
   }
 
-  Future<bool> profile(Map<String, String> authDetails) async {
+  Future<List<DocumentInfo>> getUserDocuments() async {
     try {
-      Response response = await _dio.put(users, data: authDetails);
-      User user = User.fromJson(response.data);
-      User.setUser(user);
-      return true;
-    } catch (e) {
-      return false;
-    }
+      Response response = await _dio.get(documentsEndpoint,
+          options: Options(headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer ${User.getUser()!.token}"
+          }));
+
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        List<DocumentInfo> documents = [];
+        List<Map<String, dynamic>> userDocuments = response.data;
+        for (var element in userDocuments) {
+          DocumentInfo info = DocumentInfo();
+          info.title = element["title"];
+          info.data = element["document"];
+          documents.add(info);
+        }
+
+        return documents;
+      }
+    } catch (e) {}
+
+    return [];
   }
 
-  Future<bool> avatar(String avatarURL) async {
+  Future<bool> postDocument(DocumentInfo info) async {
     try {
-      Response response = await _dio.put(users, data: {"avatarURL": avatarURL});
-      User user = User.fromJson(response.data);
-      User.setUser(user);
-      return true;
-    } catch (e) {
-      return false;
-    }
+      Response response = await _dio.post(documentsEndpoint,
+          data: {"document": info.data, "title": info.title},
+          options: Options(headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer ${User.getUser()!.token}"
+          }));
+      return (response.statusCode! >= 200 && response.statusCode! < 300);
+    } catch (e) {}
+    return false;
   }
+
 }
 
 class _AuthServiceState extends State<AuthService> {
   bool showSignUp = false;
 
   void toggleView() => setState(() => showSignUp = !showSignUp);
+  void logout() => setState(() => showSignUp = false);
 
   @override
   Widget build(BuildContext context) {
