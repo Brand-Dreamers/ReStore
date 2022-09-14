@@ -14,6 +14,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey();
+    final TextEditingController _controller = TextEditingController();
+  final TextEditingController _emailControl = TextEditingController();
   final Map<String, String> _authDetails = {"email": "", "password": ""};
   bool _showPassword = false;
 
@@ -32,6 +34,8 @@ class _LoginState extends State<Login> {
             .authenticate(_authDetails, "/signin");
 
         if (success == "SUCCESS") {
+           _controller.text = "";
+          _emailControl.text = "";
           changeScreen();
         } else {
           // Show the error message
@@ -82,6 +86,7 @@ class _LoginState extends State<Login> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 5.0),
                             child: TextFormField(
+                              controller: _emailControl,
                               decoration: InputDecoration(
                                 prefixIcon: const Padding(
                                     padding:
@@ -118,6 +123,7 @@ class _LoginState extends State<Login> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 5.0),
                             child: TextFormField(
+                              controller: _controller,
                               obscureText: !_showPassword,
                               decoration: InputDecoration(
                                   prefixIcon: const Padding(

@@ -19,6 +19,8 @@ Future<bool> willPop() async {
 class _SignupState extends State<Signup> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _emailControl = TextEditingController();
+  final TextEditingController _confirmControl = TextEditingController();
   final Map<String, String> _authDetails = {"email": "", "password": ""};
   bool _showPassword = false;
   bool _showConfirmPassword = false;
@@ -38,6 +40,9 @@ class _SignupState extends State<Signup> {
         String success = await AuthService.getService()
             .authenticate(_authDetails, "/signup");
         if (success == "SUCCESS") {
+          _controller.text = "";
+          _emailControl.text = "";
+          _confirmControl.text = "";
           changeScreen();
         } else {
           // Show the error message
@@ -87,6 +92,7 @@ class _SignupState extends State<Signup> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: TextFormField(
+                                controller: _emailControl,
                                 decoration: InputDecoration(
                                   prefixIcon: const Padding(
                                       padding:
@@ -146,7 +152,8 @@ class _SignupState extends State<Signup> {
                                               _showPassword = !_showPassword);
                                         })),
                                 validator: (value) {
-                                  if (value!.isEmpty) { // || value.length < 6
+                                  if (value!.isEmpty) {
+                                    // || value.length < 6
                                     return "Password is too short. Use at least 1 characters";
                                   }
                                   return null;
@@ -170,6 +177,7 @@ class _SignupState extends State<Signup> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: TextFormField(
+                                controller: _confirmControl,
                                 obscureText: !_showConfirmPassword,
                                 decoration: InputDecoration(
                                   prefixIcon: const Padding(

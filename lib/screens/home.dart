@@ -55,7 +55,8 @@ class _HomeState extends State<Home> {
                   PopupMenuItem<dynamic>(
                       child: Row(
                     children: const [
-                      Icon(Icons.power_settings_new_rounded),
+                      Icon(Icons.power_settings_new_rounded,
+                          color: Colors.black),
                       SizedBox(
                         width: 10,
                       ),
