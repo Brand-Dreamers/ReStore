@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:restore/screens/home.dart';
+import 'package:restore/screens/landing_page.dart';
 import 'package:restore/services/authservice.dart';
 
 class Signup extends StatefulWidget {
@@ -10,10 +10,6 @@ class Signup extends StatefulWidget {
 
   @override
   State<Signup> createState() => _SignupState();
-}
-
-Future<bool> willPop() async {
-  return false;
 }
 
 class _SignupState extends State<Signup> {
@@ -28,7 +24,7 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     void changeScreen() => Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const Home()));
+        context, MaterialPageRoute(builder: (context) => const LandingPage()));
 
     Future<bool> _submit() async {
       FormState? currentState = _formKey.currentState;
@@ -37,22 +33,30 @@ class _SignupState extends State<Signup> {
 
         currentState.save();
 
-        String success = await AuthService.getService()
-            .authenticate(_authDetails, "/signup");
-        if (success == "SUCCESS") {
-          _controller.text = "";
-          _emailControl.text = "";
-          _confirmControl.text = "";
-          changeScreen();
-        } else {
-          // Show the error message
-        }
+        Future<String> success =
+            AuthService.getService().authenticate(_authDetails, "/signup");
+
+        showDialog(
+            useSafeArea: true,
+            barrierDismissible: false,
+            context: context,
+            builder: (context) =>
+                const Popup(message: "Signing You Up"));
+
+        success.then((value) {
+          if (value == "SUCCESS") {
+            _controller.text = "";
+            _emailControl.text = "";
+            _confirmControl.text = "";
+            changeScreen();
+          }
+        });
       }
       return false;
     }
 
     return WillPopScope(
-      onWillPop: willPop,
+      onWillPop: () async => false,
       child: Scaffold(
         backgroundColor: backgroundColor,
         body: SafeArea(
@@ -76,6 +80,16 @@ class _SignupState extends State<Signup> {
                 const SizedBox(
                   height: 50,
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                      "Register with your registered school mail e.g you@school.edu.ng",
+                      style: emphasizedSubheader.copyWith(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w400,
+                          color: buttonColor)),
+                ),
+                const SizedBox(height: 10),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -220,13 +234,7 @@ class _SignupState extends State<Signup> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                          useSafeArea: true,
-                          context: context,
-                          builder: (context) => const Popup());
-                      _submit();
-                    },
+                    onTap: () => _submit(),
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
@@ -241,7 +249,7 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -265,6 +273,43 @@ class _SignupState extends State<Signup> {
                               color: const Color.fromARGB(255, 31, 119, 190))),
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text("-  OR  -",
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600, fontSize: 20)),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: borderColor),
+                      ),
+                      child: Center(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("images/google icon.png",
+                              height: 40, width: 40),
+                          const SizedBox(width: 10),
+                          Text("Sign up with Google",
+                              style: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500)),
+                        ],
+                      )),
+                    ),
+                  ),
                 ),
               ],
             ),

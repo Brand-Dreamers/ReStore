@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:restore/components/constants.dart';
+import 'package:restore/screens/landing_page.dart';
 import 'package:restore/services/authservice.dart';
-import 'package:restore/screens/home.dart';
 
 class Login extends StatefulWidget {
   final Function toggleView;
@@ -14,7 +14,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-    final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   final TextEditingController _emailControl = TextEditingController();
   final Map<String, String> _authDetails = {"email": "", "password": ""};
   bool _showPassword = false;
@@ -22,7 +22,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     void changeScreen() => Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const Home()));
+        context, MaterialPageRoute(builder: (context) => const LandingPage()));
 
     Future<bool> _submit() async {
       FormState? currentState = _formKey.currentState;
@@ -30,16 +30,22 @@ class _LoginState extends State<Login> {
         if (!currentState.validate()) return false;
 
         currentState.save();
-        String success = await AuthService.getService()
-            .authenticate(_authDetails, "/signin");
+        Future<String> success =
+            AuthService.getService().authenticate(_authDetails, "/signin");
 
-        if (success == "SUCCESS") {
-           _controller.text = "";
-          _emailControl.text = "";
-          changeScreen();
-        } else {
-          // Show the error message
-        }
+        showDialog(
+            useSafeArea: true,
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => const Popup(message: "Signing You In"));
+
+        success.then((value) {
+          if (value == "SUCCESS") {
+            _controller.text = "";
+            _emailControl.text = "";
+            changeScreen();
+          }
+        });
       }
 
       return false;
@@ -70,6 +76,16 @@ class _LoginState extends State<Login> {
                 const SizedBox(
                   height: 50,
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                      "Register with your registered school mail e.g you@school.edu.ng",
+                      style: emphasizedSubheader.copyWith(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w400,
+                          color: buttonColor)),
+                ),
+                const SizedBox(height: 10),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -146,7 +162,8 @@ class _LoginState extends State<Login> {
                                             _showPassword = !_showPassword);
                                       })),
                               validator: (value) {
-                                if (value!.isEmpty) { // || value.length < 6
+                                if (value!.isEmpty) {
+                                  // || value.length < 6
                                   return "Password is too short. Use at least 6 characters";
                                 }
                                 return null;
@@ -166,13 +183,7 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        useSafeArea: true,
-                          context: context,
-                          builder: (context) => const Popup());
-                      _submit();
-                    },
+                    onTap: () => _submit(),
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
@@ -183,6 +194,55 @@ class _LoginState extends State<Login> {
                           child: Text("Log In",
                               style: buttonTextStyle.copyWith(
                                   fontSize: 16, fontWeight: FontWeight.w400))),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Forgot Password?, ",
+                        style: GoogleFonts.poppins(fontSize: 13)),
+                    Text("Click Here",
+                        style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            color: const Color.fromARGB(255, 180, 21, 10))),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text("-  OR  -",
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500, fontSize: 20)),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: borderColor),
+                      ),
+                      child: Center(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("images/google icon.png",
+                              height: 40, width: 40),
+                          const SizedBox(width: 10),
+                          Text("Log in with Google",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16, fontWeight: FontWeight.w500)),
+                        ],
+                      )),
                     ),
                   ),
                 ),

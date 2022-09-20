@@ -19,6 +19,9 @@ dependencies:
   pdf: ^3.8.1
   pdfx: ^2.0.1+2
   dio: ^4.0.6
+  easy_permission_validator: ^4.0.0
+  path_provider: ^2.0.11
+  is_first_run: ^1.0.0
 
 dev_dependencies:
   flutter_test:

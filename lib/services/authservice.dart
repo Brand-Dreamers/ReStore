@@ -12,9 +12,9 @@ class AuthService extends StatefulWidget {
 
   final Dio _dio = Dio(BaseOptions(
     baseUrl: baseURL,
-    receiveTimeout: 7000,
-    connectTimeout: 7000,
-    sendTimeout: 7000,
+    receiveTimeout: 15000,
+    connectTimeout: 15000,
+    sendTimeout: 15000,
   ));
   AuthService({Key? key}) : super(key: key);
 
@@ -57,21 +57,22 @@ class AuthService extends StatefulWidget {
             "Accept": "application/json",
             "Authorization": "Bearer ${User.getUser()!.token}"
           }));
-
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         List<DocumentInfo> documents = [];
-        List<Map<String, dynamic>> userDocuments = response.data;
+        List<dynamic> userDocuments = response.data as List<dynamic>;
         for (var element in userDocuments) {
           DocumentInfo info = DocumentInfo();
           info.title = element["title"];
           info.data = element["document"];
+          info.id = element["_id"];
           documents.add(info);
         }
 
         return documents;
       }
-    } catch (e) {}
-
+    } catch (e) {
+      
+    }
     return [];
   }
 
@@ -89,6 +90,18 @@ class AuthService extends StatefulWidget {
     return false;
   }
 
+  Future<bool> deleteDocument(String id) async {
+    try {
+      Response response = await _dio.post("$documentsEndpoint/$id",
+          options: Options(headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer ${User.getUser()!.token}"
+          }));
+       return (response.statusCode! >= 200 && response.statusCode! < 300);   
+    } catch (e) {}
+    return false;
+  }
 }
 
 class _AuthServiceState extends State<AuthService> {
