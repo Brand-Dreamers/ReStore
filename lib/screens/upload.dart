@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:restore/components/pdf_handler.dart';
 import 'package:restore/components/constants.dart';
+import 'package:restore/screens/landing_page.dart';
 import 'dart:convert';
 
 import 'package:restore/services/authservice.dart';
@@ -31,15 +32,49 @@ class _UploadState extends State<Upload> {
 
   @override
   Widget build(BuildContext context) {
-    void changeScreen() => Navigator.pop(context);
-    Size size = MediaQuery.of(context).size;
+    void changeScreen() => Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LandingPage()));
 
+    void upload() async {
+      showDialog(
+          context: context,
+          builder: (context) => const Popup(
+                message: "Uploading Document",
+              ));
+
+      String encode = base64.encode(pdfData.data);
+      Future<String> res = AuthService.getService()
+          .postDocument(DocumentInfo(data: encode, title: pdfData.filename));
+      res.then((value) {
+        if (value == success) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Document Successfully Uploaded"),
+            elevation: 1.0,
+            dismissDirection: DismissDirection.down,
+            duration: Duration(seconds: 3),
+          ));
+          changeScreen();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(value),
+            elevation: 1.0,
+            dismissDirection: DismissDirection.down,
+            duration: const Duration(seconds: 3),
+          ));
+          setState(() {});
+        }
+      });
+    }
+
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: const SizedBox(),
+          leading: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(Icons.chevron_left_rounded, color: buttonColor)),
           title: Text(
-            "Stamp Document",
+            "Upload Document",
             style: emphasizedSubheader.copyWith(
                 fontSize: 20, fontWeight: FontWeight.w400, color: buttonColor),
           ),
@@ -69,7 +104,7 @@ class _UploadState extends State<Upload> {
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: SizedBox(
                                   width: size.width,
-                                  height: size.height - 170,
+                                  height: size.height - 150,
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 20, vertical: 10),
@@ -77,62 +112,6 @@ class _UploadState extends State<Upload> {
                                         PdfViewPinch(controller: _controller),
                                   )),
                             ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                height: 60,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(15.0),
-                                      topLeft: Radius.circular(15.0)),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    GestureDetector(
-                                        onTap: () => Navigator.pop(context),
-                                        child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20),
-                                            child: Text(
-                                              "Cancel",
-                                              style:
-                                                  emphasizedSubheader.copyWith(
-                                                color: Colors.black,
-                                                fontSize: 18,
-                                              ),
-                                            ))),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => const Popup(
-                                                  message: "Uploading Document",
-                                                ));
-                                        String encode =
-                                            base64.encode(pdfData.data);
-                                        await AuthService.getService()
-                                            .postDocument(DocumentInfo(
-                                                data: encode,
-                                                title: pdfData.filename));
-                                        changeScreen();
-                                      },
-                                      child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 20),
-                                          child: Text("Upload",
-                                              style:
-                                                  emphasizedSubheader.copyWith(
-                                                      color: buttonColor,
-                                                      fontSize: 18))),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
                           ],
                         );
                       }
@@ -146,6 +125,10 @@ class _UploadState extends State<Upload> {
                         child: Text(
                             "An Error Occured On The Server. Contact The Developer!"));
                   }
-                })));
+                })),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => upload(),
+          child: const Icon(Icons.upload_file_rounded),
+        ));
   }
 }

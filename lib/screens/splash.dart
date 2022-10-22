@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/services/authservice.dart';
 import 'package:is_first_run/is_first_run.dart';
@@ -31,15 +30,15 @@ class _SplashState extends State<Splash> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Restore",
-                      style: GoogleFonts.poppins(
+                      style: TextStyle( fontFamily: "Poppins",
                           fontSize: 32,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: buttonColor),
                     ),
                     Text("By The Dreamers",
-                        style: emphasizedSubheader.copyWith(fontSize: 14))
+                        style: emphasizedSubheader.copyWith(fontSize: 14, fontWeight: FontWeight.w300))
                   ],
                 ),
                 nextScreen:

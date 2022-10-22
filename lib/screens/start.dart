@@ -103,7 +103,7 @@ class _SlideContainerState extends State<SlideContainer> {
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(

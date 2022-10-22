@@ -25,6 +25,7 @@ class _StampState extends State<Stamp> {
   late PDFData pdfData;
   late PdfController _controller;
   final DragData dragData = DragData();
+  bool _showPopup = false;
 
   @override
   void initState() {
@@ -38,36 +39,58 @@ class _StampState extends State<Stamp> {
 
   @override
   Widget build(BuildContext context) {
+    void message(String message) =>
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(message),
+          elevation: 1.0,
+          dismissDirection: DismissDirection.down,
+          duration: const Duration(seconds: 3),
+        ));
+
     void changeScreen() => Navigator.pop(context);
+
     Size size = MediaQuery.of(context).size;
 
     void _stamp() async {
-      showDialog(
-          useSafeArea: true,
-          barrierDismissible: false,
-          context: context,
-          builder: (context) => const Popup(message: "Stamping Document"));
+      if (_showPopup) {
+        showDialog(
+            useSafeArea: true,
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => const Popup(message: "Stamping Document"));
+      }
 
       String stampPath = "images/dummy stamp.png";
       ByteData bytes = await rootBundle.load(stampPath);
       Uint8List stampData =
           bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
-      String result = await createAndSavePDF(
+      String data = await createAndSavePDF(
           pdfData, stampData, dragData.xOffset, dragData.yOffset);
 
-      if (result != "") {
-        bool posted = await AuthService.getService()
-            .postDocument(DocumentInfo(data: result, title: pdfData.filename));
-        if (posted) {
-          changeScreen();
-        }
+      if (data != "") {
+        Future<String> res = AuthService.getService()
+            .postDocument(DocumentInfo(data: data, title: pdfData.filename));
+        res.then((value) {
+          if (value == success) {
+            message("Document Stamp Success");
+            changeScreen();
+          } else {
+            setState(() => _showPopup = false);
+            message(value);
+          }
+        });
+      } else {
+        setState(() => _showPopup = false);
+        message("Document Stamp Failed");
       }
     }
 
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: const SizedBox(),
+          leading: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(Icons.chevron_left_rounded, color: buttonColor)),
           title: Text(
             "Stamp Document",
             style: emphasizedSubheader.copyWith(
@@ -146,7 +169,10 @@ class _StampState extends State<Stamp> {
                   }
                 })),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _stamp(),
+          onPressed: () {
+            setState(() => _showPopup = true);
+            _stamp();
+          },
           child: const Icon(Icons.upload_file_rounded),
         ));
   }

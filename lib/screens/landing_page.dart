@@ -38,35 +38,33 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black54,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Settings(
-              closeMenu: closeMenu,
-            ),
-            GestureDetector(
-              onTap: closeMenu,
-              child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  transform: Matrix4.translationValues(xOffset, yOffset, 0)
-                    ..scale(scale),
-                  child: AbsorbPointer(
-                    absorbing: isMenuOpen,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(isMenuOpen ? 15 : 0),
-                      child: Container(
-                        color: backgroundColor,
-                        child: Home(
-                          openMenu: openMenu,
-                        ),
+    return Material(
+      color: Colors.black45,
+      child: Stack(
+        children: [
+          Settings(
+            closeMenu: closeMenu,
+          ),
+          GestureDetector(
+            onTap: closeMenu,
+            child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                transform: Matrix4.translationValues(xOffset, yOffset, 0)
+                  ..scale(scale),
+                child: AbsorbPointer(
+                  absorbing: isMenuOpen,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(isMenuOpen ? 20 : 0),
+                    child: Container(
+                      color: backgroundColor,
+                      child: Home(
+                        openMenu: openMenu,
                       ),
                     ),
-                  )),
-            )
-          ],
-        ),
+                  ),
+                )),
+          )
+        ],
       ),
     );
   }
