@@ -47,11 +47,11 @@ class _UploadState extends State<Upload> {
           .postDocument(DocumentInfo(data: encode, title: pdfData.filename));
       res.then((value) {
         if (value == success) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Document Successfully Uploaded"),
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("${pdfData.filename} Successfully Uploaded"),
             elevation: 1.0,
             dismissDirection: DismissDirection.down,
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ));
           changeScreen();
         } else {

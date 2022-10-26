@@ -48,12 +48,7 @@ class _ProfileState extends State<Profile> {
         Future<String> res = AuthService.getService().profile(_authDetails);
         res.then((value) {
           if (value == success) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text("Welcome to Restore"),
-              elevation: 1.0,
-              dismissDirection: DismissDirection.down,
-              duration: Duration(seconds: 3),
-            ));
+            
             changeScreen();
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(

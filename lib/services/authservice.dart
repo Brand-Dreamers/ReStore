@@ -48,14 +48,13 @@ class AuthService extends StatefulWidget {
                 "Authorization": "Bearer ${user.token}"
               }));
 
-          // user.surname = response.data["firstName"] as String;
-          // user.lastname = response.data["lastName"] as String;
-          // user.matricNumber = response.data["matricNumber"] as String;
-          // user.level = response.data["level"] as String;
-          // user.college = response.data["college"] as String;
-          // user.telephone = response.data["telephone"] as String;
-          // user.department = response.data["department"] as String;
-          print(userResp);
+          user.surname = userResp.data["firstName"] as String;
+          user.lastname = userResp.data["lastName"] as String;
+          user.matricNumber = userResp.data["matricNumber"] as String;
+          user.level = userResp.data["level"] as String;
+          user.college = userResp.data["college"] as String;
+          user.telephone = userResp.data["telephone"] as String;
+          user.department = userResp.data["department"] as String;
         }
 
         User.setUser(user);

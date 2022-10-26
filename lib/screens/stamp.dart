@@ -60,29 +60,29 @@ class _StampState extends State<Stamp> {
             builder: (context) => const Popup(message: "Stamping Document"));
       }
 
-      String stampPath = "images/dummy stamp.png";
-      ByteData bytes = await rootBundle.load(stampPath);
-      Uint8List stampData =
-          bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
-      String data = await createAndSavePDF(
-          pdfData, stampData, dragData.xOffset, dragData.yOffset);
+      // String stampPath = "images/dummy stamp.png";
+      // ByteData bytes = await rootBundle.load(stampPath);
+      // Uint8List stampData =
+      //     bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+      // String data = await createAndSavePDF(
+      //     pdfData, stampData, dragData.xOffset, dragData.yOffset);
 
-      if (data != "") {
-        Future<String> res = AuthService.getService()
-            .postDocument(DocumentInfo(data: data, title: pdfData.filename));
-        res.then((value) {
-          if (value == success) {
-            message("Document Stamp Success");
-            changeScreen();
-          } else {
-            setState(() => _showPopup = false);
-            message(value);
-          }
-        });
-      } else {
-        setState(() => _showPopup = false);
-        message("Document Stamp Failed");
-      }
+      // if (data != "") {
+      //   Future<String> res = AuthService.getService()
+      //       .postDocument(DocumentInfo(data: data, title: pdfData.filename));
+      //   res.then((value) {
+      //     if (value == success) {
+      //       message("Document Stamp Success");
+      //       changeScreen();
+      //     } else {
+      //       setState(() => _showPopup = false);
+      //       message(value);
+      //     }
+      //   });
+      // } else {
+      //   setState(() => _showPopup = false);
+      //   message("Document Stamp Failed");
+      // }
     }
 
     return Scaffold(

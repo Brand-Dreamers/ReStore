@@ -42,19 +42,13 @@ class _LoginState extends State<Login> {
           if (value == success) {
             _controller.text = "";
             _emailControl.text = "";
+            changeScreen();
+          } else {
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text("Welcome to Restore"),
+              content: Text("An error occured. Please check the email and password"),
               elevation: 1.0,
               dismissDirection: DismissDirection.down,
               duration: Duration(seconds: 3),
-            ));
-            changeScreen();
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(value),
-              elevation: 1.0,
-              dismissDirection: DismissDirection.down,
-              duration: const Duration(seconds: 3),
             ));
             setState(() {});
           }
