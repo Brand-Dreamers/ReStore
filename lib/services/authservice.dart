@@ -4,8 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/components/user.dart';
+import 'package:restore/screens/landing_page.dart';
 import 'package:restore/screens/login.dart';
 import 'package:restore/screens/signup.dart';
+import 'package:restore/components/pdf_handler.dart';
 
 class AuthService extends StatefulWidget {
   static final AuthService _authservice = AuthService();
@@ -25,7 +27,6 @@ class AuthService extends StatefulWidget {
 
   Future<String> authenticate(
       Map<String, String> authDetails, String authPath) async {
-    String error = "";
     try {
       Response response = await _dio.post(
         "$users$authPath",
@@ -56,20 +57,17 @@ class AuthService extends StatefulWidget {
           user.telephone = userResp.data["telephone"] as String;
           user.department = userResp.data["department"] as String;
         }
-
+        saveUserData(
+            authDetails["email"] as String, authDetails["password"] as String);
         User.setUser(user);
         return success;
-      } else {
-        error = response.data["error"] as String;
       }
-    } catch (e) {
-      error = e.toString();
-    }
+    } catch (e) {}
 
-    return error;
+    return "Wrong Email Or Password";
   }
 
-  Future<List<DocumentInfo>> getUserDocuments() async {
+  Future<List<PDFData>> getUserDocuments() async {
     try {
       Response response = await _dio.get(documentsEndpoint,
           options: Options(headers: {
@@ -79,13 +77,13 @@ class AuthService extends StatefulWidget {
           }));
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        List<DocumentInfo> documents = [];
+        List<PDFData> documents = [];
         List<dynamic> userDocuments = response.data as List<dynamic>;
         for (var element in userDocuments) {
-          DocumentInfo info = DocumentInfo();
-          info.title = element["title"];
-          info.data = element["document"];
-          info.id = element["_id"];
+          PDFData info = PDFData();
+          info.filename = element["title"];
+          info.encodedData = element["document"];
+          info.documentId = element["_id"];
           documents.add(info);
         }
         return documents;
@@ -95,7 +93,6 @@ class AuthService extends StatefulWidget {
   }
 
   Future<String> profile(Map<String, String> authDetails) async {
-    String msg = "";
     User user = User.getUser()!;
     authDetails["avatar"] = user.email;
 
@@ -118,35 +115,27 @@ class AuthService extends StatefulWidget {
         user.department = authDetails["department"] as String;
         return success;
       }
-    } catch (e) {
-      msg = e.toString();
-    }
-    return msg;
+    } catch (e) {}
+    return "Something Went Wrong. Please Try Again";
   }
 
-  Future<String> postDocument(DocumentInfo info) async {
-    String res = "";
+  Future<String> postDocument(PDFData info) async {
     try {
       Response response = await _dio.post(documentsEndpoint,
-          data: {"document": info.data, "title": info.title},
+          data: {"document": info.data, "title": info.filename},
           options: Options(headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
             "Authorization": "Bearer ${User.getUser()!.token}"
           }));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        res = success;
-      } else {
-        res = response.data["message"];
+        return success;
       }
-    } catch (e) {
-      res = e.toString();
-    }
-    return res;
+    } catch (e) {}
+    return "An Error Occurred While Uploading. Please Try Again";
   }
 
   Future<String> deleteDocument(String id) async {
-    String res = "";
     try {
       Response response = await _dio.delete("$documentsEndpoint/$id",
           options: Options(headers: {
@@ -155,31 +144,39 @@ class AuthService extends StatefulWidget {
             "Authorization": "Bearer ${User.getUser()!.token}"
           }));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        res = success;
+        return success;
       }
-    } catch (e) {
-      res = e.toString();
-    }
-    return res;
+    } catch (e) {}
+    return "An Error Occurred While Deleting. Please Try Again";
   }
 }
 
 class _AuthServiceState extends State<AuthService> {
   bool showSignUp = false;
+  bool _firstRun = true;
 
   void toggleView() => setState(() => showSignUp = !showSignUp);
-  void logout() => setState(() => showSignUp = false);
+
+  Widget _getWidget() {
+    Widget w;
+    if (_firstRun && hasUserData()) {
+      List<String> data = loadUserData();
+      Map<String, String> authDetails = {"email": data[0], "password": data[1]};
+      AuthService.getService().authenticate(authDetails, login);
+      w = const LandingPage();
+    } else {
+      if (showSignUp) {
+        w = Signup(toggleView: toggleView);
+      } else {
+        w = Login(toggleView: toggleView);
+      }
+    }
+    _firstRun = false;
+    return w;
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (showSignUp) {
-      return Signup(
-        toggleView: toggleView,
-      );
-    } else {
-      return Login(
-        toggleView: toggleView,
-      );
-    }
+    return _getWidget();
   }
 }

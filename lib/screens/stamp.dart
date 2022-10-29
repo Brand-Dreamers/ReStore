@@ -25,40 +25,28 @@ class _StampState extends State<Stamp> {
   late PDFData pdfData;
   late PdfController _controller;
   final DragData dragData = DragData();
-  bool _showPopup = false;
 
   @override
   void initState() {
     super.initState();
     futureData = loadPDF();
-    futureData.then((value) {
+    futureData.then((value) 
+    {
       pdfData = value;
-      _controller = PdfController(document: PdfDocument.openData(value.data));
+      _controller = PdfController(document: PdfDocument.openData(value.data!));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    void message(String message) =>
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(message),
-          elevation: 1.0,
-          dismissDirection: DismissDirection.down,
-          duration: const Duration(seconds: 3),
-        ));
-
-    void changeScreen() => Navigator.pop(context);
-
     Size size = MediaQuery.of(context).size;
 
-    void _stamp() async {
-      if (_showPopup) {
-        showDialog(
-            useSafeArea: true,
-            barrierDismissible: false,
-            context: context,
-            builder: (context) => const Popup(message: "Stamping Document"));
-      }
+    void _stamp() {
+      showDialog(
+          useSafeArea: true,
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => const Popup());
 
       // String stampPath = "images/dummy stamp.png";
       // ByteData bytes = await rootBundle.load(stampPath);
@@ -83,6 +71,8 @@ class _StampState extends State<Stamp> {
       //   setState(() => _showPopup = false);
       //   message("Document Stamp Failed");
       // }
+
+      Navigator.pop(context);
     }
 
     return Scaffold(
@@ -108,7 +98,7 @@ class _StampState extends State<Stamp> {
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
                       PDFData data = snapshot.data as PDFData;
-                      if (data.data.isEmpty) {
+                      if (data.data!.isEmpty) {
                         return const Center(
                           child: Text("No File Was Selected"),
                         );
@@ -169,10 +159,8 @@ class _StampState extends State<Stamp> {
                   }
                 })),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() => _showPopup = true);
-            _stamp();
-          },
+          onPressed: () =>
+            _stamp(),
           child: const Icon(Icons.upload_file_rounded),
         ));
   }

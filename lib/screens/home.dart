@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/components/user.dart';
+import 'package:restore/screens/stamp.dart';
 import 'package:restore/screens/upload.dart';
 import 'package:restore/screens/view.dart';
 
@@ -52,57 +53,6 @@ class HomeSlide extends StatelessWidget {
   }
 }
 
-class OddOne extends StatelessWidget {
-  final String imageURL;
-  final String header;
-  final String description;
-
-  const OddOne({
-    Key? key,
-    required this.imageURL,
-    required this.header,
-    required this.description,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 140,
-      height: 220,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(
-            imageURL,
-            width: 130,
-            height: 100,
-          ),
-          Text(header,
-              style: emphasizedHeader.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white)),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(description,
-                style: emphasizedSubheader.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: buttonColor)),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class Home extends StatefulWidget {
   final VoidCallback openMenu;
@@ -138,17 +88,16 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    void _navigateUpload() => Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const Upload()));
-
-    void _navigateDocuments() => Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const ViewDocuments()));
-
     void _executeOnTap(int index) {
-      if (index == 1) {
-        _navigateUpload();
+      if (index == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const Stamp()));
+      } else if (index == 1) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const Upload()));
       } else if (index == 2) {
-        _navigateDocuments();
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ViewDocuments()));
       }
     }
 
@@ -210,17 +159,9 @@ class _HomeState extends State<Home> {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
-                                      width: 140,
-                                      height: 220,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          color: Colors.black87),
-                                      child: OddOne(
-                                          imageURL: "images/document.png",
-                                          header: "Stamp",
-                                          description: "Coming Soon")),
+                                  GestureDetector(
+                                      onTap: () => _executeOnTap(0),
+                                      child: homeSlides[0]),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () => _executeOnTap(1),

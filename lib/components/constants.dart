@@ -53,37 +53,11 @@ List<String> getAvatarURLS(int numberOfUrls) {
   return avatarURLS;
 }
 
-class ThemeProvider extends ChangeNotifier {
-  ThemeMode mode = ThemeMode.light;
-  bool get isDarkMode => mode == ThemeMode.dark;
-}
-
-final darkTheme = ThemeData(
-  scaffoldBackgroundColor: Colors.grey.shade900,
-  colorScheme: const ColorScheme.dark(),
-);
-
-final lightTheme = ThemeData(
-  scaffoldBackgroundColor: const Color.fromARGB(255, 250, 255, 250),
-  colorScheme: const ColorScheme.light(),
-);
-
-class DocumentInfo {
-  String title;
-  String size;
-  String data;
-  String id;
-
-  DocumentInfo({this.title = "", this.size = "", this.data = "", this.id = ""});
-}
-
 class Popup extends StatefulWidget {
-  final String message;
   final Widget icon;
 
   const Popup(
       {Key? key,
-      this.message = "Please Wait",
       this.icon = const CircularProgressIndicator(color: buttonColor)})
       : super(key: key);
 
@@ -94,28 +68,14 @@ class Popup extends StatefulWidget {
 class _PopupState extends State<Popup> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
-        width: size.width * 0.75,
+        width: 100,
+        height: 100,
         child: AlertDialog(
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              widget.icon,
-              const SizedBox(
-                width: 20,
-              ),
-              Text(
-                widget.message,
-                style: emphasizedSubheader.copyWith(
-                    fontSize: 15, fontWeight: FontWeight.w300),
-              ),
-            ],
-          ),
-        ),
+            content:
+                Center(child: CircularProgressIndicator(color: buttonColor))),
       ),
     );
   }

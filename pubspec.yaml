@@ -14,7 +14,8 @@ dependencies:
   shared_preferences: ^2.0.15
   animated_splash_screen: ^1.2.0
   file_picker: ^4.6.1
-  pdfx: ^2.0.1+2
+  pdfx: ^2.3.0
+  pdf: ^3.8.4
   dio: ^4.0.6
   easy_permission_validator: ^4.0.0
   path_provider: ^2.0.11
@@ -28,14 +29,13 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter_icons:
-  #  image_path: "assets/images/icon-128x128.png"
   image_path_android: "images/restore.png"
   image_path_ios: "images/restore.png"
-  android: true # can specify file name here e.g. "ic_launcher"
-  ios: true # can specify file name here e.g. "My-Launcher-Icon"
-  adaptive_icon_background: "#FFFFFF" # only available for Android 8.0 devices and above
-  adaptive_icon_foreground: "images/restore.png" # only available for Android 8.0 devices and above
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  android: true
+  ios: true
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "images/restore.png"
+  min_sdk_android: 21
   remove_alpha_ios: true
   web:
     generate: true
@@ -45,7 +45,7 @@ flutter_icons:
   windows:
     generate: true
     image_path: "images/restore.png"
-    icon_size: 48 # min:48, max:256, default: 48
+    icon_size: 48
   macos:
     generate: true
     image_path: "images/restore.png"

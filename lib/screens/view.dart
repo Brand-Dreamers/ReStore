@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdfx/pdfx.dart';
+import 'package:restore/components/pdf_handler.dart';
 import 'package:restore/components/constants.dart';
 import 'package:restore/services/authservice.dart';
 import 'package:easy_permission_validator/easy_permission_validator.dart';
 import 'dart:io';
 
 class View extends StatefulWidget {
-  final DocumentInfo data;
+  final PDFData data;
   const View({Key? key, required this.data}) : super(key: key);
 
   @override
@@ -17,27 +18,56 @@ class View extends StatefulWidget {
 }
 
 class _ViewState extends State<View> {
-  late PdfControllerPinch _controller;
   late Uint8List data;
+  late PdfControllerPinch _controller;
+
+  int page = 1;
   bool showPopup = false;
 
   @override
   void initState() {
     super.initState();
-    data = base64.decode(widget.data.data);
-    _controller = PdfControllerPinch(document: PdfDocument.openData(data));
+    data = base64.decode(widget.data.encodedData);
+    _controller = PdfControllerPinch(
+        document: PdfDocument.openData(data), initialPage: page);
   }
 
   @override
   Widget build(BuildContext context) {
-    void changeScreen() {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Document Saved"),
-        elevation: 1.0,
-        dismissDirection: DismissDirection.down,
-        duration: Duration(seconds: 3),
-      ));
-      Navigator.pop(context);
+    void _save() {
+      showDialog(context: context, builder: (context) => const Popup());
+
+      final permissionValidator = EasyPermissionValidator(
+        context: context,
+        appName: 'Restore',
+      );
+      Future<bool> res = permissionValidator.storage();
+      res.then((value) {
+        if (value) {
+          Future<Directory?> dir = getExternalStorageDirectory();
+          dir.then((value) {
+            String filePath = "${value!.path}/${widget.data.filename}";
+            File file = File(filePath);
+            file.writeAsBytes(data);
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("${widget.data.filename} Saved"),
+              elevation: 1.0,
+              dismissDirection: DismissDirection.down,
+              duration: const Duration(seconds: 3),
+            ));
+          });
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("An Error Occured Saving ${widget.data.filename}"),
+            elevation: 1.0,
+            dismissDirection: DismissDirection.down,
+            duration: const Duration(seconds: 3),
+          ));
+        }
+        Navigator.pop(context);
+      });
+
+      setState(() {});
     }
 
     return Scaffold(
@@ -49,32 +79,11 @@ class _ViewState extends State<View> {
                 onPressed: () => Navigator.pop(context),
                 icon: const Icon(Icons.chevron_left_rounded,
                     color: Colors.white)),
-            title: Text(widget.data.title),
+            title: Text(widget.data.filename),
             centerTitle: true,
             actions: [
               GestureDetector(
-                onTap: () async {
-                  showDialog(
-                      context: context,
-                      builder: (context) => const Popup(
-                            message: "Saving Document",
-                          ));
-
-                  final permissionValidator = EasyPermissionValidator(
-                    context: context,
-                    appName: 'Restore',
-                  );
-                  var result = await permissionValidator.storage();
-                  if (result) {
-                    Directory? dir = await getExternalStorageDirectory();
-                    String filePath = "${dir?.path}/view-${widget.data.title}";
-                    File file = File(filePath);
-                    file.writeAsBytes(data);
-                    changeScreen();
-                  } else {
-                    setState(() {});
-                  }
-                },
+                onTap: () => _save(),
                 child: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   child: Icon(Icons.download),
@@ -83,9 +92,12 @@ class _ViewState extends State<View> {
             ]),
         body: SafeArea(
             child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: PdfViewPinch(controller: _controller),
-        )));
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: PdfViewPinch(
+                  controller: _controller,
+                  scrollDirection: Axis.horizontal,
+                  onPageChanged: (p) => page = p,
+                ))));
   }
 }
 
@@ -97,7 +109,7 @@ class ViewDocuments extends StatefulWidget {
 }
 
 class _ViewDocumentsState extends State<ViewDocuments> {
-  late Future<List<DocumentInfo>?> documents;
+  late Future<List<PDFData>?> documents;
 
   @override
   void initState() {
@@ -107,21 +119,21 @@ class _ViewDocumentsState extends State<ViewDocuments> {
 
   @override
   Widget build(BuildContext context) {
-    void onDelete(String id) {
+    void onDelete(String id, String filename) {
       showDialog(
           useSafeArea: true,
           barrierDismissible: false,
           context: context,
-          builder: (context) => const Popup(message: "Deleting Document"));
+          builder: (context) => const Popup());
 
       Future<String> res = AuthService.getService().deleteDocument(id);
       res.then((value) {
         if (value == success) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Deleted Succesfully"),
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Deleted $filename Succesfully"),
             elevation: 1.0,
             dismissDirection: DismissDirection.down,
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -131,8 +143,8 @@ class _ViewDocumentsState extends State<ViewDocuments> {
             duration: const Duration(seconds: 3),
           ));
         }
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const ViewDocuments()));
+        setState(() {});
+        Navigator.pop(context);
       });
     }
 
@@ -162,8 +174,8 @@ class _ViewDocumentsState extends State<ViewDocuments> {
                     return const Popup();
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
-                      List<DocumentInfo>? userDocuments =
-                          snapshot.data as List<DocumentInfo>?;
+                      List<PDFData>? userDocuments =
+                          snapshot.data as List<PDFData>?;
                       if (userDocuments == null || userDocuments.isEmpty) {
                         return Text("No Documents Uploaded",
                             style: emphasizedSubheader.copyWith(fontSize: 16));
@@ -174,16 +186,18 @@ class _ViewDocumentsState extends State<ViewDocuments> {
                             itemCount: userDocuments.length,
                             itemBuilder: (context, index) {
                               return ListTile(
-                                  title: Text(userDocuments[index].title),
-                                  subtitle: Text(userDocuments[index].size),
+                                  title: Text(
+                                    userDocuments[index].filename,
+                                  ),
                                   leading: Image.asset(
                                     "images/pdf.png",
                                     height: 40,
                                     width: 40,
                                   ),
                                   trailing: GestureDetector(
-                                      onTap: () =>
-                                          onDelete(userDocuments[index].id),
+                                      onTap: () => onDelete(
+                                          userDocuments[index].documentId,
+                                          userDocuments[index].filename),
                                       child: const Icon(Icons.delete_rounded)),
                                   onTap: () => Navigator.push(
                                         context,

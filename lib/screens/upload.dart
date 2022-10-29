@@ -26,7 +26,7 @@ class _UploadState extends State<Upload> {
     futureData.then((value) {
       pdfData = value;
       _controller =
-          PdfControllerPinch(document: PdfDocument.openData(value.data));
+          PdfControllerPinch(document: PdfDocument.openData(pdfData.data!));
     });
   }
 
@@ -36,15 +36,12 @@ class _UploadState extends State<Upload> {
         context, MaterialPageRoute(builder: (context) => const LandingPage()));
 
     void upload() async {
-      showDialog(
-          context: context,
-          builder: (context) => const Popup(
-                message: "Uploading Document",
-              ));
+      showDialog(context: context, builder: (context) => const Popup());
 
-      String encode = base64.encode(pdfData.data);
-      Future<String> res = AuthService.getService()
-          .postDocument(DocumentInfo(data: encode, title: pdfData.filename));
+      String encode = base64.encode(pdfData.data!);
+
+      Future<String> res = AuthService.getService().postDocument(
+          PDFData(encodedData: encode, filename: pdfData.filename));
       res.then((value) {
         if (value == success) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -90,7 +87,7 @@ class _UploadState extends State<Upload> {
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
                       PDFData data = snapshot.data as PDFData;
-                      if (data.data.isEmpty) {
+                      if (data.data!.isEmpty) {
                         return const Center(
                           child: Text("No File Was Selected"),
                         );

@@ -36,7 +36,7 @@ class _SignupState extends State<Signup> {
             useSafeArea: true,
             barrierDismissible: false,
             context: context,
-            builder: (context) => const Popup(message: "Signing You Up"));
+            builder: (context) => const Popup());
 
         Future<String> res =
             AuthService.getService().authenticate(_authDetails, register);
@@ -60,7 +60,7 @@ class _SignupState extends State<Signup> {
               dismissDirection: DismissDirection.down,
               duration: const Duration(seconds: 3),
             ));
-            setState(() {});
+            Navigator.pop(context);
           }
         });
       }
@@ -91,7 +91,6 @@ class _SignupState extends State<Signup> {
                 const SizedBox(
                   height: 50,
                 ),
-                
                 const SizedBox(height: 10),
                 Form(
                   key: _formKey,
@@ -155,7 +154,8 @@ class _SignupState extends State<Signup> {
                                             size: 20, color: iconColor)),
                                     border: InputBorder.none,
                                     hintText: "Password",
-                                    hintStyle: const TextStyle(color: Colors.grey),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.grey),
                                     suffixIcon: GestureDetector(
                                         child: Icon(
                                             _showPassword
@@ -201,7 +201,8 @@ class _SignupState extends State<Signup> {
                                           size: 20, color: iconColor)),
                                   border: InputBorder.none,
                                   hintText: "Confirm Password",
-                                  hintStyle: const TextStyle(color: Colors.grey),
+                                  hintStyle:
+                                      const TextStyle(color: Colors.grey),
                                   suffixIcon: GestureDetector(
                                       child: Icon(
                                           _showConfirmPassword

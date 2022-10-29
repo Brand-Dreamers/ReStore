@@ -18,44 +18,45 @@ class _LoginState extends State<Login> {
   final Map<String, String> _authDetails = {"email": "", "password": ""};
   bool _showPassword = false;
 
+  void changeScreen() => Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (context) => const LandingPage()));
+
+  void _submit() {
+    FormState? currentState = _formKey.currentState;
+    if (currentState != null) {
+      if (!currentState.validate()) return;
+
+      currentState.save();
+      showDialog(
+          useSafeArea: true,
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => const Popup());
+
+      Future<String> res =
+          AuthService.getService().authenticate(_authDetails, login);
+
+      res.then((value) {
+        if (value == success) {
+          _controller.text = "";
+          _emailControl.text = "";
+          changeScreen();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+                value),
+            elevation: 1.0,
+            dismissDirection: DismissDirection.down,
+            duration: const Duration(seconds: 3),
+          ));
+          Navigator.pop(context);
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    void changeScreen() => Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LandingPage()));
-
-    void _submit() {
-      FormState? currentState = _formKey.currentState;
-      if (currentState != null) {
-        if (!currentState.validate()) return;
-
-        currentState.save();
-        showDialog(
-            useSafeArea: true,
-            barrierDismissible: false,
-            context: context,
-            builder: (context) => const Popup(message: "Signing You In"));
-
-        Future<String> res =
-            AuthService.getService().authenticate(_authDetails, login);
-
-        res.then((value) {
-          if (value == success) {
-            _controller.text = "";
-            _emailControl.text = "";
-            changeScreen();
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text("An error occured. Please check the email and password"),
-              elevation: 1.0,
-              dismissDirection: DismissDirection.down,
-              duration: Duration(seconds: 3),
-            ));
-            setState(() {});
-          }
-        });
-      }
-    }
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

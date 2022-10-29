@@ -32,23 +32,18 @@ class _ProfileState extends State<Profile> {
     void changeScreen() => Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const LandingPage()));
 
-    void _submit() async {
+    void _submit() {
       FormState? currentState = _formKey.currentState;
       if (currentState != null) {
         if (!currentState.validate()) return;
 
         currentState.save();
 
-        showDialog(
-            context: context,
-            builder: (context) => const Popup(
-                  message: "Creating Profile",
-                ));
+        showDialog(context: context, builder: (context) => const Popup());
 
         Future<String> res = AuthService.getService().profile(_authDetails);
         res.then((value) {
           if (value == success) {
-            
             changeScreen();
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -57,10 +52,8 @@ class _ProfileState extends State<Profile> {
               dismissDirection: DismissDirection.down,
               duration: const Duration(seconds: 3),
             ));
-            setState(() {});
+            Navigator.pop(context);
           }
-          setState(() {});
-
         });
       }
     }
